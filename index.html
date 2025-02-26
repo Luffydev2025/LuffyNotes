@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LuffyNotes</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #d1d8e0 100%);
+            color: #2c3e50;
+            transition: all 0.4s ease;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        body.dark {
+            background: linear-gradient(135deg, #2c3e50 0%, #576574 100%);
+            color: #ecf0f1;
+        }
+
+        body[lang="en"] {
+            direction: ltr;
+        }
+
+        header {
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px;
+            border-radius: 0 0 15px 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        body.dark header {
+            background: rgba(44, 62, 80, 0.98);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #2980b9, #1abc9c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fff;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .site-title {
+            font-size: 24px;
+            font-weight: 700;
+            color: #2980b9;
+        }
+
+        body.dark .site-title {
+            color: #e67e22;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .toggle-mode, .toggle-lang {
+            padding: 8px 15px;
+            background: #3498db;
+            color: #fff;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 14px;
+        }
+
+        body.dark .toggle-mode, body.dark .toggle-lang {
+            background: #e67e22;
+        }
+
+        .container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+            max-width: 1000px;
+            margin: 20px auto;
+            flex-grow: 1;
+        }
+
+        .sidebar {
+            flex: 1 1 100%;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        body.dark .sidebar {
+            background: rgba(44, 62, 80, 0.98);
+        }
+
+        .search-bar {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 20px;
+            background: #f5f6fa;
+            margin-bottom: 15px;
+            font-size: 14px;
+        }
+
+        body.dark .search-bar {
+            background: #3d566e;
+            color: #ecf0f1;
+        }
+
+        .editor {
+            flex: 1 1 100%;
+            background: rgba(255, 255, 255, 0.98);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .editor {
+            background: rgba(44, 62, 80, 0.98);
+        }
+
+        #note-input {
+            width: 100%;
+            min-height: 150px;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            resize: vertical;
+            font-size: 14px;
+            background: #fff;
+            color: #2c3e50;
+        }
+
+        body.dark #note-input {
+            background: #34495e;
+            color: #ecf0f1;
+        }
+
+        .toolbar {
+            margin: 10px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .toolbar button {
+            padding: 8px 15px;
+            background: #ecf0f1;
+            color: #2c3e50;
+            border-radius: 20px;
+            font-size: 12px;
+        }
+
+        body.dark .toolbar button {
+            background: #3d566e;
+            color: #ecf0f1;
+        }
+
+        .tags {
+            margin-top: 10px;
+        }
+
+        .tags input {
+            width: 100%;
+            padding: 10px;
+            border: none;
+            border-radius: 10px;
+            font-size: 14px;
+            background: #f5f6fa;
+        }
+
+        body.dark .tags input {
+            background: #3d566e;
+            color: #ecf0f1;
+        }
+
+        .button-group {
+            margin-top: 15px;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        button {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+            color: #fff;
+            border: none;
+            border-radius: 25px;
+            cursor: pointer;
+            flex-grow: 1;
+            font-size: 14px;
+        }
+
+        button.delete {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+
+        button.export {
+            background: linear-gradient(45deg, #9b59b6, #8e44ad);
+        }
+
+        #notes-list {
+            list-style: none;
+        }
+
+        #notes-list li {
+            padding: 10px;
+            background: #f8f9fa;
+            margin-bottom: 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 14px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 10px;
+        }
+
+        body.dark #notes-list li {
+            background: #3d566e;
+        }
+
+        .note-actions button {
+            padding: 5px 10px;
+            font-size: 12px;
+            border-radius: 15px;
+        }
+
+        .notification {
+            position: fixed;
+            top: 10px;
+            left: 50%;
+            transform: translateX(-50%);
+            padding: 10px 20px;
+            border-radius: 10px;
+            color: #fff;
+            font-size: 14px;
+            z-index: 1000;
+            opacity: 0;
+            transition: opacity 0.5s;
+            background: linear-gradient(45deg, #2ecc71, #27ae60);
+        }
+
+        .notification.error {
+            background: linear-gradient(45deg, #e74c3c, #c0392b);
+        }
+
+        footer {
+            text-align: center;
+            padding: 15px;
+            font-size: 14px;
+            color: #7f8c8d;
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.98);
+            border-radius: 15px 15px 0 0;
+        }
+
+        body.dark footer {
+            color: #bdc3c7;
+            background: rgba(44, 62, 80, 0.98);
+        }
+
+        @media (min-width: 768px) {
+            .sidebar { flex: 1 1 300px; max-height: 70vh; }
+            .editor { flex: 2 1 400px; }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <div class="logo-circle">L</div>
+            <span class="site-title">LuffyNotes</span>
+        </div>
+        <div class="header-actions">
+            <button class="toggle-mode" onclick="toggleDarkMode()">
+                <i class="fas fa-moon"></i> <span data-ar="الوضع الليلي" data-en="Dark Mode">الوضع الليلي</span>
+            </button>
+            <button class="toggle-lang" onclick="toggleLanguage()">
+                <i class="fas fa-globe"></i> <span data-ar="English" data-en="العربية">English</span>
+            </button>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="sidebar">
+            <h2><i class="fas fa-sticky-note"></i> <span data-ar="الملاحظات" data-en="Notes">الملاحظات</span></h2>
+            <input type="text" class="search-bar" id="search-input" placeholder="ابحث في الملاحظات..." data-en-placeholder="Search notes..." onkeyup="searchNotes()">
+            <ul id="notes-list"></ul>
+        </div>
+
+        <div class="editor">
+            <div class="toolbar">
+                <button onclick="changeColor('red')"><i class="fas fa-paint-brush"></i> <span data-ar="أحمر" data-en="Red">أحمر</span></button>
+                <button onclick="changeColor('blue')"><i class="fas fa-paint-brush"></i> <span data-ar="أزرق" data-en="Blue">أزرق</span></button>
+                <button onclick="changeColor('black')"><i class="fas fa-paint-brush"></i> <span data-ar="أسود" data-en="Black">أسود</span></button>
+                <button onclick="suggestTags()" title="اقتراح وسوم ذكي"><i class="fas fa-brain"></i> AI Tags</button>
+            </div>
+            <textarea id="note-input" placeholder="اكتب ملاحظتك هنا..." data-en-placeholder="Write your note here..."></textarea>
+            <div class="tags">
+                <input type="text" id="tags-input" placeholder="أضف وسوم (مفصولة بفواصل)" data-en-placeholder="Add tags (comma-separated)">
+            </div>
+            <div class="button-group">
+                <button onclick="saveNote()"><i class="fas fa-save"></i> <span data-ar="حفظ" data-en="Save">حفظ</span></button>
+                <button class="delete" onclick="clearNote()"><i class="fas fa-trash"></i> <span data-ar="مسح" data-en="Clear">مسح</span></button>
+                <button class="export" onclick="exportNoteAsPDF()"><i class="fas fa-file-pdf"></i> <span data-ar="تصدير PDF" data-en="Export PDF">تصدير PDF</span></button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        جميع الحقوق محفوظة لـ © Said Jellouli | 2025
+    </footer>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
+    <script>
+        let notes = [];
+        let currentLang = "ar";
+        // استبدل هذا الرابط برابط الخادم الخاص بك بعد الرفع
+        const API_URL = "http://localhost:5000/api/notes"; 
+
+        document.addEventListener("DOMContentLoaded", () => {
+            fetchNotes();
+            updateLanguage();
+        });
+
+        function toggleDarkMode() {
+            document.body.classList.toggle("dark");
+            const button = document.querySelector(".toggle-mode span");
+            button.textContent = document.body.classList.contains("dark")
+                ? button.dataset[currentLang === "ar" ? "en" : "ar"]
+                : button.dataset[currentLang];
+        }
+
+        function toggleLanguage() {
+            currentLang = currentLang === "ar" ? "en" : "ar";
+            document.body.setAttribute("lang", currentLang);
+            document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
+            updateLanguage();
+        }
+
+        function updateLanguage() {
+            document.querySelectorAll("[data-ar]").forEach(element => {
+                element.textContent = element.dataset[currentLang];
+            });
+            document.querySelectorAll("[data-en-placeholder]").forEach(element => {
+                element.placeholder = currentLang === "ar" ? element.placeholder : element.dataset.enPlaceholder;
+            });
+            document.querySelector(".toggle-lang span").textContent = currentLang === "ar" ? "English" : "العربية";
+            displayNotes();
+        }
+
+        async function fetchNotes() {
+            try {
+                const response = await fetch(API_URL);
+                notes = await response.json();
+                displayNotes();
+            } catch (error) {
+                showNotification("خطأ في الاتصال بالخادم", "error");
+            }
+        }
+
+        function displayNotes(filter = "") {
+            const notesList = document.getElementById("notes-list");
+            notesList.innerHTML = "";
+            const filteredNotes = notes.filter(note => 
+                note.content.includes(filter) || note.tags.some(tag => tag.includes(filter))
+            );
+            filteredNotes.forEach((note, index) => {
+                const li = document.createElement("li");
+                li.innerHTML = `
+                    <span style="color: ${note.color}">${note.content.slice(0, 30)}... (${note.tags.join(", ")}) - ${note.createdAt}</span>
+                    <div class="note-actions">
+                        <button onclick="deleteNote('${note._id}')"><i class="fas fa-trash"></i></button>
+                    </div>
+                `;
+                li.onclick = (e) => {
+                    if (e.target.tagName !== "BUTTON" && e.target.tagName !== "I") loadNote(note);
+                };
+                notesList.appendChild(li);
+            });
+        }
+
+        async function saveNote() {
+            const content = document.getElementById("note-input").value.trim();
+            const tags = document.getElementById("tags-input").value.split(",").map(tag => tag.trim()).filter(tag => tag);
+            const color = document.getElementById("note-input").style.color || "black";
+            
+            if (content) {
+                const note = { content, tags, color, createdAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en") };
+                await fetch(API_URL, {
+                    method: "POST",
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(note)
+                });
+                fetchNotes();
+                clearNote();
+                showNotification(currentLang === "ar" ? "تم الحفظ بنجاح!" : "Saved successfully!", "success");
+            } else {
+                showNotification(currentLang === "ar" ? "يرجى كتابة ملاحظة" : "Please write a note", "error");
+            }
+        }
+
+        function loadNote(note) {
+            document.getElementById("note-input").value = note.content;
+            document.getElementById("note-input").style.color = note.color;
+            document.getElementById("tags-input").value = note.tags.join(", ");
+        }
+
+        async function deleteNote(id) {
+            await fetch(`${API_URL}/${id}`, { method: "DELETE" });
+            fetchNotes();
+            showNotification(currentLang === "ar" ? "تم الحذف!" : "Deleted!", "success");
+        }
+
+        function clearNote() {
+            document.getElementById("note-input").value = "";
+            document.getElementById("tags-input").value = "";
+            document.getElementById("note-input").style.color = "black";
+        }
+
+        function searchNotes() {
+            const filter = document.getElementById("search-input").value.trim();
+            displayNotes(filter);
+        }
+
+        function changeColor(color) {
+            document.getElementById("note-input").style.color = color;
+        }
+
+        function exportNoteAsPDF() {
+            const content = document.getElementById("note-input").value;
+            if (!content) {
+                showNotification(currentLang === "ar" ? "لا يوجد محتوى" : "No content", "error");
+                return;
+            }
+            const element = document.createElement("div");
+            element.innerHTML = `<h1>LuffyNotes</h1><p style="color: ${document.getElementById("note-input").style.color}">${content}</p>`;
+            element.style.padding = "20px";
+            html2pdf().from(element).save("LuffyNotes.pdf");
+            showNotification(currentLang === "ar" ? "تم التصدير!" : "Exported!", "success");
+        }
+
+        function suggestTags() {
+            const content = document.getElementById("note-input").value.toLowerCase();
+            const tagsInput = document.getElementById("tags-input");
+            let suggestedTags = [];
+            if (content.includes("work") || content.includes("عمل")) suggestedTags.push("work");
+            if (content.includes("personal") || content.includes("شخصي")) suggestedTags.push("personal");
+            if (content.includes("idea") || content.includes("فكرة")) suggestedTags.push("idea");
+            tagsInput.value = suggestedTags.join(", ");
+            showNotification(currentLang === "ar" ? "تم اقتراح الوسوم!" : "Tags suggested!", "success");
+        }
+
+        function showNotification(message, type) {
+            const existing = document.querySelector(".notification");
+            if (existing) existing.remove();
+            const noti = document.createElement("div");
+            noti.className = `notification ${type}`;
+            noti.textContent = message;
+            document.body.appendChild(noti);
+            setTimeout(() => noti.style.opacity = "1", 10);
+            setTimeout(() => {
+                noti.style.opacity = "0";
+                setTimeout(() => noti.remove(), 500);
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
