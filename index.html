@@ -316,26 +316,26 @@
 
     <div class="container">
         <div class="sidebar">
-            <h2><i class="fas fa-sticky-note"></i> <span data-ar="الملاحظات" data-en="Notes">الملاحظات</span></h2>
+            <h2><i class="fas fa-sticky-note"></i> <span class="lang-text" data-ar="الملاحظات" data-en="Notes">الملاحظات</span></h2>
             <input type="text" class="search-bar" id="search-input" placeholder="ابحث في الملاحظات..." data-en-placeholder="Search notes..." onkeyup="searchNotes()">
             <ul id="notes-list"></ul>
         </div>
 
         <div class="editor">
             <div class="toolbar">
-                <button onclick="changeColor('red')"><i class="fas fa-paint-brush"></i> <span data-ar="أحمر" data-en="Red">أحمر</span></button>
-                <button onclick="changeColor('blue')"><i class="fas fa-paint-brush"></i> <span data-ar="أزرق" data-en="Blue">أزرق</span></button>
-                <button onclick="changeColor('black')"><i class="fas fa-paint-brush"></i> <span data-ar="أسود" data-en="Black">أسود</span></button>
-                <button onclick="suggestTags()" title="اقتراح وسوم ذكي"><i class="fas fa-brain"></i> AI Tags</button>
+                <button onclick="changeColor('red')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أحمر" data-en="Red">أحمر</span></button>
+                <button onclick="changeColor('blue')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أزرق" data-en="Blue">أزرق</span></button>
+                <button onclick="changeColor('black')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أسود" data-en="Black">أسود</span></button>
+                <button onclick="suggestTags()" title="Smart Tags Suggestion"><i class="fas fa-brain"></i> AI Tags</button>
             </div>
             <textarea id="note-input" placeholder="اكتب ملاحظتك هنا..." data-en-placeholder="Write your note here..."></textarea>
             <div class="tags">
                 <input type="text" id="tags-input" placeholder="أضف وسوم (مفصولة بفواصل)" data-en-placeholder="Add tags (comma-separated)">
             </div>
             <div class="button-group">
-                <button onclick="saveNote()"><i class="fas fa-save"></i> <span data-ar="حفظ" data-en="Save">حفظ</span></button>
-                <button class="delete" onclick="clearNote()"><i class="fas fa-trash"></i> <span data-ar="مسح" data-en="Clear">مسح</span></button>
-                <button class="export" onclick="exportNoteAsPDF()"><i class="fas fa-file-pdf"></i> <span data-ar="تصدير PDF" data-en="Export PDF">تصدير PDF</span></button>
+                <button onclick="saveNote()"><i class="fas fa-save"></i> <span class="lang-text" data-ar="حفظ" data-en="Save">حفظ</span></button>
+                <button class="delete" onclick="clearNote()"><i class="fas fa-trash"></i> <span class="lang-text" data-ar="مسح" data-en="Clear">مسح</span></button>
+                <button class="export" onclick="exportNoteAsPDF()"><i class="fas fa-file-pdf"></i> <span class="lang-text" data-ar="تصدير PDF" data-en="Export PDF">تصدير PDF</span></button>
             </div>
         </div>
     </div>
@@ -344,12 +344,11 @@
         جميع الحقوق محفوظة لـ © Said Jellouli | 2025
     </footer>
 
-    <!-- Firebase SDK -->
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.6.0/firebase-database.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <script>
-        // تهيئة Firebase مع بياناتك
+    <!-- Firebase SDK (Modular API) -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-app.js';
+        import { getDatabase, ref, onValue, push, remove } from 'https://www.gstatic.com/firebasejs/10.11.1/firebase-database.js';
+
         const firebaseConfig = {
             apiKey: "AIzaSyBFfizl1yIRMatU4pPYcHrxW5dfTCMgc1U",
             authDomain: "luffynotes-web.firebaseapp.com",
@@ -360,9 +359,10 @@
             appId: "1:325676473249:web:bf2549db86c893cdf1c9e0",
             measurementId: "G-TJMMRGJBXL"
         };
-        firebase.initializeApp(firebaseConfig);
-        const db = firebase.database();
-        const notesRef = db.ref("notes");
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase(app);
+        const notesRef = ref(db, 'notes');
 
         let notes = [];
         let currentLang = "ar";
@@ -376,8 +376,8 @@
             document.body.classList.toggle("dark");
             const button = document.querySelector(".toggle-mode span");
             button.textContent = document.body.classList.contains("dark")
-                ? button.dataset[currentLang === "ar" ? "en" : "ar"]
-                : button.dataset[currentLang];
+                ? button.getAttribute(currentLang === "ar" ? "data-en" : "data-ar")
+                : button.getAttribute(currentLang === "ar" ? "data-ar" : "data-en");
         }
 
         function toggleLanguage() {
@@ -388,18 +388,19 @@
         }
 
         function updateLanguage() {
-            document.querySelectorAll("[data-ar]").forEach(element => {
-                element.textContent = element.dataset[currentLang];
+            document.querySelectorAll(".lang-text").forEach(element => {
+                element.textContent = element.getAttribute(`data-${currentLang}`);
             });
-            document.querySelectorAll("[data-en-placeholder]").forEach(element => {
-                element.placeholder = currentLang === "ar" ? element.placeholder : element.dataset.enPlaceholder;
+            const placeholders = document.querySelectorAll("[data-en-placeholder]");
+            placeholders.forEach(element => {
+                element.placeholder = currentLang === "ar" ? element.getAttribute("placeholder") : element.getAttribute("data-en-placeholder");
             });
-            document.querySelector(".toggle-lang span").textContent = currentLang === "ar" ? "English" : "العربية";
-            displayNotes();
+            const langButton = document.querySelector(".toggle-lang span");
+            langButton.textContent = currentLang === "ar" ? "English" : "العربية";
         }
 
         function fetchNotes() {
-            notesRef.on("value", (snapshot) => {
+            onValue(notesRef, (snapshot) => {
                 notes = [];
                 snapshot.forEach((childSnapshot) => {
                     const note = childSnapshot.val();
@@ -416,7 +417,8 @@
             const notesList = document.getElementById("notes-list");
             notesList.innerHTML = "";
             const filteredNotes = notes.filter(note => 
-                note.content.includes(filter) || note.tags.some(tag => tag.includes(filter))
+                note.content.toLowerCase().includes(filter.toLowerCase()) || 
+                note.tags.some(tag => tag.toLowerCase().includes(filter.toLowerCase()))
             );
             filteredNotes.forEach((note) => {
                 const li = document.createElement("li");
@@ -440,7 +442,7 @@
             
             if (content) {
                 const note = { content, tags, color, createdAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en") };
-                notesRef.push(note);
+                push(notesRef, note);
                 clearNote();
                 showNotification(currentLang === "ar" ? "تم الحفظ بنجاح!" : "Saved successfully!", "success");
             } else {
@@ -455,7 +457,7 @@
         }
 
         function deleteNote(id) {
-            notesRef.child(id).remove();
+            remove(ref(db, `notes/${id}`));
             showNotification(currentLang === "ar" ? "تم الحذف!" : "Deleted!", "success");
         }
 
@@ -512,5 +514,6 @@
             }, 3000);
         }
     </script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
 </body>
 </html>
