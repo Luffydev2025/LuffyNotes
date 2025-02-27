@@ -306,10 +306,10 @@
         </div>
         <div class="header-actions">
             <button class="toggle-mode" onclick="toggleDarkMode()">
-                <i class="fas fa-moon"></i> <span data-ar="الوضع الليلي" data-en="Dark Mode">الوضع الليلي</span>
+                <i class="fas fa-moon"></i> <span class="lang-text" data-ar="الوضع الليلي" data-en="Dark Mode">الوضع الليلي</span>
             </button>
             <button class="toggle-lang" onclick="toggleLanguage()">
-                <i class="fas fa-globe"></i> <span data-ar="English" data-en="العربية">English</span>
+                <i class="fas fa-globe"></i> <span class="lang-text" data-ar="English" data-en="العربية">English</span>
             </button>
         </div>
     </header>
@@ -360,9 +360,15 @@
             measurementId: "G-TJMMRGJBXL"
         };
 
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-        const notesRef = ref(db, 'notes');
+        try {
+            const app = initializeApp(firebaseConfig);
+            const db = getDatabase(app);
+            const notesRef = ref(db, 'notes');
+            console.log("Firebase initialized successfully");
+        } catch (error) {
+            console.error("Error initializing Firebase:", error);
+            showNotification("Error initializing Firebase", "error");
+        }
 
         let notes = [];
         let currentLang = "ar";
@@ -374,7 +380,7 @@
 
         function toggleDarkMode() {
             document.body.classList.toggle("dark");
-            const button = document.querySelector(".toggle-mode span");
+            const button = document.querySelector(".toggle-mode .lang-text");
             button.textContent = document.body.classList.contains("dark")
                 ? button.getAttribute(currentLang === "ar" ? "data-en" : "data-ar")
                 : button.getAttribute(currentLang === "ar" ? "data-ar" : "data-en");
@@ -393,9 +399,9 @@
             });
             const placeholders = document.querySelectorAll("[data-en-placeholder]");
             placeholders.forEach(element => {
-                element.placeholder = currentLang === "ar" ? element.getAttribute("placeholder") : element.getAttribute("data-en-placeholder");
+                element.placeholder = currentLang === "ar" ? "اكتب ملاحظتك هنا..." : element.getAttribute("data-en-placeholder");
             });
-            const langButton = document.querySelector(".toggle-lang span");
+            const langButton = document.querySelector(".toggle-lang .lang-text");
             langButton.textContent = currentLang === "ar" ? "English" : "العربية";
         }
 
@@ -407,8 +413,10 @@
                     note.id = childSnapshot.key;
                     notes.push(note);
                 });
+                console.log("Notes fetched:", notes);
                 displayNotes();
             }, (error) => {
+                console.error("Error fetching notes:", error);
                 showNotification(currentLang === "ar" ? "خطأ في جلب الملاحظات" : "Error fetching notes", "error");
             });
         }
@@ -442,9 +450,16 @@
             
             if (content) {
                 const note = { content, tags, color, createdAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en") };
-                push(notesRef, note);
-                clearNote();
-                showNotification(currentLang === "ar" ? "تم الحفظ بنجاح!" : "Saved successfully!", "success");
+                push(notesRef, note)
+                    .then(() => {
+                        console.log("Note saved:", note);
+                        clearNote();
+                        showNotification(currentLang === "ar" ? "تم الحفظ بنجاح!" : "Saved successfully!", "success");
+                    })
+                    .catch((error) => {
+                        console.error("Error saving note:", error);
+                        showNotification(currentLang === "ar" ? "خطأ في الحفظ" : "Error saving note", "error");
+                    });
             } else {
                 showNotification(currentLang === "ar" ? "يرجى كتابة ملاحظة" : "Please write a note", "error");
             }
@@ -457,8 +472,15 @@
         }
 
         function deleteNote(id) {
-            remove(ref(db, `notes/${id}`));
-            showNotification(currentLang === "ar" ? "تم الحذف!" : "Deleted!", "success");
+            remove(ref(db, `notes/${id}`))
+                .then(() => {
+                    console.log("Note deleted:", id);
+                    showNotification(currentLang === "ar" ? "تم الحذف!" : "Deleted!", "success");
+                })
+                .catch((error) => {
+                    console.error("Error deleting note:", error);
+                    showNotification(currentLang === "ar" ? "خطأ في الحذف" : "Error deleting note", "error");
+                });
         }
 
         function clearNote() {
