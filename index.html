@@ -450,15 +450,40 @@
 
         function exportNoteAsPDF() {
             const content = document.getElementById("note-input").value;
+            const color = document.getElementById("note-input").style.color || "black";
             if (!content) {
                 showNotification(currentLang === "ar" ? "لا يوجد محتوى" : "No content", "error");
                 return;
             }
+
+            // إنشاء عنصر HTML مؤقت للتصدير
             const element = document.createElement("div");
-            element.innerHTML = `<h1>LuffyNotes</h1><p style="color: ${document.getElementById("note-input").style.color}">${content}</p>`;
+            element.style.fontFamily = "Arial, sans-serif"; // دعم النصوص العربية
+            element.style.direction = currentLang === "ar" ? "rtl" : "ltr"; // دعم الاتجاه
             element.style.padding = "20px";
-            html2pdf().from(element).save("LuffyNotes.pdf");
-            showNotification(currentLang === "ar" ? "تم التصدير!" : "Exported!", "success");
+            element.style.color = color;
+            element.innerHTML = `
+                <h1 style="color: #2980b9; text-align: center;">LuffyNotes</h1>
+                <p style="font-size: 16px; line-height: 1.5;">${content.replace(/\n/g, '<br>')}</p>
+            `;
+            
+            // إعدادات html2pdf مع خيارات محسّنة
+            const opt = {
+                margin: 1,
+                filename: 'LuffyNotes.pdf',
+                image: { type: 'jpeg', quality: 0.98 },
+                html2canvas: { scale: 2 },
+                jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+            };
+
+            html2pdf().set(opt).from(element).save()
+                .then(() => {
+                    showNotification(currentLang === "ar" ? "تم التصدير!" : "Exported!", "success");
+                })
+                .catch((error) => {
+                    console.error("Error exporting PDF:", error);
+                    showNotification(currentLang === "ar" ? "خطأ في التصدير" : "Export error", "error");
+                });
         }
 
         function suggestTags() {
