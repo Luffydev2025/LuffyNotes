@@ -10,21 +10,21 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', Arial, sans-serif;
+            font-family: 'Segoe UI', 'Noto Sans Arabic', Arial, sans-serif;
         }
 
         body {
-            background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
+            background: linear-gradient(145deg, #f0f4ff 0%, #e0e7ff 100%);
             color: #1e293b;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            transition: background 0.4s ease;
+            transition: background 0.5s ease;
         }
 
         body.dark {
-            background: linear-gradient(135deg, #1e293b 0%, #334155 100%);
+            background: linear-gradient(145deg, #1e293b 0%, #2d3e50 100%);
             color: #e2e8f0;
         }
 
@@ -33,30 +33,28 @@
         }
 
         header {
-            background: rgba(255, 255, 255, 0.95);
-            padding: 20px;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px 30px;
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 15px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(10px);
-            transition: background 0.4s ease;
+            backdrop-filter: blur(12px);
+            transition: background 0.5s ease;
         }
 
         body.dark header {
-            background: rgba(30, 41, 59, 0.95);
+            background: rgba(30, 41, 59, 0.9);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 15px;
             transition: transform 0.3s ease;
         }
 
@@ -65,103 +63,120 @@
         }
 
         .logo-circle {
-            width: 45px;
-            height: 45px;
-            background: linear-gradient(135deg, #3b82f6, #10b981);
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #4f46e5, #22c55e);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .logo-circle::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 60%);
+            animation: glow 3s infinite ease-in-out;
+        }
+
+        @keyframes glow {
+            0%, 100% { transform: scale(1); opacity: 0.5; }
+            50% { transform: scale(1.2); opacity: 1; }
         }
 
         .site-title {
-            font-size: 28px;
+            font-size: 32px;
             font-weight: 700;
-            background: linear-gradient(90deg, #3b82f6, #10b981);
+            background: linear-gradient(90deg, #4f46e5, #22c55e);
             -webkit-background-clip: text;
             color: transparent;
+            letter-spacing: 1px;
         }
 
         body.dark .site-title {
-            background: linear-gradient(90deg, #f97316, #facc15);
-            -webkit-background-clip: text;
+            background: linear-gradient(90deg, #f43f5e, #f59e0b);
         }
 
         .header-actions {
             display: flex;
-            gap: 15px;
+            gap: 20px;
         }
 
         .toggle-mode, .toggle-lang {
-            padding: 10px 20px;
-            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            padding: 12px 25px;
+            background: linear-gradient(45deg, #4f46e5, #7dd3fc);
             color: #fff;
             border: none;
-            border-radius: 25px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 14px;
+            font-size: 15px;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
         }
 
         .toggle-mode:hover, .toggle-lang:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            transform: translateY(-3px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
         body.dark .toggle-mode, body.dark .toggle-lang {
-            background: linear-gradient(45deg, #f97316, #fb923c);
+            background: linear-gradient(45deg, #f43f5e, #fb923c);
         }
 
         .container {
             display: flex;
             flex-wrap: wrap;
-            gap: 20px;
-            max-width: 1100px;
-            margin: 30px auto;
+            gap: 25px;
+            max-width: 1200px;
+            margin: 40px auto;
             flex-grow: 1;
-            animation: fadeIn 0.5s ease-in;
+            animation: slideUp 0.6s ease-out;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: translateY(20px); }
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .sidebar {
             flex: 1 1 100%;
             background: rgba(255, 255, 255, 0.98);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
-            max-height: 60vh;
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+            max-height: 65vh;
             overflow-y: auto;
             transition: all 0.3s ease;
         }
 
         body.dark .sidebar {
             background: rgba(30, 41, 59, 0.98);
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
         }
 
         .search-bar {
             width: 100%;
-            padding: 12px 20px;
+            padding: 14px 25px;
             border: none;
-            border-radius: 25px;
+            border-radius: 30px;
             background: #f1f5f9;
-            margin-bottom: 20px;
-            font-size: 15px;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+            margin-bottom: 25px;
+            font-size: 16px;
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.05);
             transition: box-shadow 0.3s ease;
         }
 
         .search-bar:focus {
             outline: none;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.5);
+            box-shadow: 0 0 12px rgba(79, 70, 229, 0.5);
         }
 
         body.dark .search-bar {
@@ -172,9 +187,9 @@
         .editor {
             flex: 1 1 100%;
             background: rgba(255, 255, 255, 0.98);
-            padding: 20px;
-            border-radius: 20px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            border-radius: 25px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
             transition: all 0.3s ease;
         }
 
@@ -184,21 +199,21 @@
 
         #note-input {
             width: 100%;
-            min-height: 200px;
-            padding: 15px;
+            min-height: 220px;
+            padding: 18px;
             border: none;
-            border-radius: 12px;
+            border-radius: 15px;
             resize: vertical;
-            font-size: 16px;
+            font-size: 17px;
             background: #fff;
             color: #1e293b;
-            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
 
         #note-input:focus {
             outline: none;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.3);
         }
 
         body.dark #note-input {
@@ -207,24 +222,26 @@
         }
 
         .toolbar {
-            margin: 15px 0;
+            margin: 20px 0;
             display: flex;
-            gap: 12px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .toolbar button {
-            padding: 10px 20px;
+            padding: 12px 25px;
             background: #f1f5f9;
             color: #1e293b;
-            border-radius: 25px;
-            font-size: 14px;
+            border-radius: 30px;
+            font-size: 15px;
             transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .toolbar button:hover {
             background: #e2e8f0;
             transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         body.dark .toolbar button {
@@ -237,23 +254,23 @@
         }
 
         .tags {
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .tags input {
             width: 100%;
-            padding: 12px 20px;
+            padding: 14px 25px;
             border: none;
-            border-radius: 12px;
-            font-size: 15px;
+            border-radius: 15px;
+            font-size: 16px;
             background: #f1f5f9;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
 
         .tags input:focus {
             outline: none;
-            box-shadow: 0 0 10px rgba(59, 130, 246, 0.3);
+            box-shadow: 0 0 12px rgba(79, 70, 229, 0.3);
         }
 
         body.dark .tags input {
@@ -262,21 +279,21 @@
         }
 
         .button-group {
-            margin-top: 20px;
+            margin-top: 25px;
             display: flex;
-            gap: 15px;
+            gap: 20px;
             flex-wrap: wrap;
         }
 
         button {
-            padding: 12px 25px;
-            background: linear-gradient(45deg, #10b981, #34d399);
+            padding: 14px 30px;
+            background: linear-gradient(45deg, #22c55e, #4ade80);
             color: #fff;
             border: none;
-            border-radius: 30px;
+            border-radius: 35px;
             cursor: pointer;
             flex-grow: 1;
-            font-size: 15px;
+            font-size: 16px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
@@ -287,7 +304,7 @@
         }
 
         button.delete {
-            background: linear-gradient(45deg, #ef4444, #f87171);
+            background: linear-gradient(45deg, #f43f5e, #fb7185);
         }
 
         #notes-list {
@@ -295,70 +312,87 @@
         }
 
         #notes-list li {
-            padding: 15px;
+            padding: 18px;
             background: #f8fafc;
-            margin-bottom: 12px;
-            border-radius: 12px;
+            margin-bottom: 15px;
+            border-radius: 15px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
-            border-left: 4px solid #3b82f6;
+            gap: 20px;
+            border-left: 5px solid #4f46e5;
             transition: all 0.3s ease;
         }
 
         #notes-list li:hover {
             background: #e2e8f0;
             transform: translateX(5px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         body.dark #notes-list li {
             background: #475569;
-            border-left-color: #f97316;
+            border-left-color: #f43f5e;
         }
 
         body.dark #notes-list li:hover {
             background: #64748b;
         }
 
+        .note-actions {
+            display: flex;
+            gap: 10px;
+        }
+
         .note-actions button {
             padding: 8px 15px;
-            font-size: 13px;
+            font-size: 14px;
             border-radius: 20px;
+            background: transparent;
+            color: inherit;
+            transition: all 0.3s ease;
+        }
+
+        .note-actions button:hover {
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        body.dark .note-actions button:hover {
+            background: rgba(255, 255, 255, 0.1);
         }
 
         .notification {
             position: fixed;
-            top: 15px;
+            top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 12px 25px;
-            border-radius: 12px;
+            padding: 15px 30px;
+            border-radius: 15px;
             color: #fff;
-            font-size: 15px;
+            font-size: 16px;
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.5s, transform 0.3s;
-            background: linear-gradient(45deg, #10b981, #34d399);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #22c55e, #4ade80);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
         .notification.error {
-            background: linear-gradient(45deg, #ef4444, #f87171);
+            background: linear-gradient(45deg, #f43f5e, #fb7185);
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            font-size: 15px;
+            padding: 25px;
+            font-size: 16px;
             color: #64748b;
-            margin-top: 30px;
+            margin-top: 40px;
             background: rgba(255, 255, 255, 0.98);
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
-            transition: background 0.4s ease;
+            border-radius: 25px 25px 0 0;
+            box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.1);
+            transition: background 0.5s ease;
         }
 
         body.dark footer {
@@ -367,8 +401,8 @@
         }
 
         @media (min-width: 768px) {
-            .sidebar { flex: 1 1 320px; max-height: 70vh; }
-            .editor { flex: 2 1 450px; }
+            .sidebar { flex: 1 1 340px; max-height: 75vh; }
+            .editor { flex: 2 1 500px; }
         }
     </style>
 </head>
@@ -400,14 +434,14 @@
                 <button onclick="changeColor('#ef4444')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أحمر" data-en="Red">أحمر</span></button>
                 <button onclick="changeColor('#3b82f6')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أزرق" data-en="Blue">أزرق</span></button>
                 <button onclick="changeColor('#1e293b')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أسود" data-en="Black">أسود</span></button>
-                <button onclick="suggestTags()" title="Smart Tags Suggestion"><i class="fas fa-brain"></i> AI Tags</button>
+                <button onclick="suggestTags()" title="Smart Tags"><i class="fas fa-brain"></i> <span class="lang-text" data-ar="وسوم ذكية" data-en="Smart Tags">وسوم ذكية</span></button>
             </div>
             <textarea id="note-input" placeholder="اكتب ملاحظتك هنا..." data-en-placeholder="Write your note here..."></textarea>
             <div class="tags">
                 <input type="text" id="tags-input" placeholder="أضف وسوم (مفصولة بفواصل)" data-en-placeholder="Add tags (comma-separated)">
             </div>
             <div class="button-group">
-                <button onclick="saveNote()"><i class="fas fa-save"></i> <span class="lang-text" data-ar="حفظ" data-en="Save">حفظ</span></button>
+                <button onclick="saveNote()" class="save-btn"><i class="fas fa-save"></i> <span class="lang-text" data-ar="حفظ" data-en="Save">حفظ</span></button>
                 <button class="delete" onclick="clearNote()"><i class="fas fa-trash"></i> <span class="lang-text" data-ar="مسح" data-en="Clear">مسح</span></button>
             </div>
         </div>
@@ -418,9 +452,11 @@
     </footer>
 
     <script>
+        // تهيئة الحالة من التخزين المحلي
         let notes = JSON.parse(localStorage.getItem("luffyNotes")) || [];
         let currentLang = localStorage.getItem("luffyLang") || "ar";
         let isDarkMode = localStorage.getItem("luffyDarkMode") === "true";
+        let editingIndex = null;
 
         document.addEventListener("DOMContentLoaded", () => {
             if (isDarkMode) document.body.classList.add("dark");
@@ -428,16 +464,14 @@
             document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
             displayNotes();
             updateLanguage();
+            checkSaveButtonState();
         });
 
         function toggleDarkMode() {
             document.body.classList.toggle("dark");
             isDarkMode = document.body.classList.contains("dark");
             localStorage.setItem("luffyDarkMode", isDarkMode);
-            const button = document.querySelector(".toggle-mode .lang-text");
-            button.textContent = isDarkMode
-                ? button.getAttribute(currentLang === "ar" ? "data-en" : "data-ar")
-                : button.getAttribute(currentLang === "ar" ? "data-ar" : "data-en");
+            updateLanguage();
         }
 
         function toggleLanguage() {
@@ -452,41 +486,49 @@
             document.querySelectorAll(".lang-text").forEach(element => {
                 element.textContent = element.getAttribute(`data-${currentLang}`);
             });
-            const placeholders = document.querySelectorAll("[data-en-placeholder]");
-            placeholders.forEach(element => {
-                element.placeholder = currentLang === "ar" 
-                    ? element.getAttribute("placeholder") 
-                    : element.getAttribute("data-en-placeholder");
-            });
+            const noteInput = document.getElementById("note-input");
+            const tagsInput = document.getElementById("tags-input");
+            noteInput.placeholder = currentLang === "ar" ? "اكتب ملاحظتك هنا..." : "Write your note here...";
+            tagsInput.placeholder = currentLang === "ar" ? "أضف وسوم (مفصولة بفواصل)" : "Add tags (comma-separated)";
+            const saveBtn = document.querySelector(".save-btn .lang-text");
+            saveBtn.textContent = editingIndex !== null 
+                ? (currentLang === "ar" ? "تحديث" : "Update") 
+                : (currentLang === "ar" ? "حفظ" : "Save");
         }
 
         function displayNotes(filter = "") {
             const notesList = document.getElementById("notes-list");
             notesList.innerHTML = "";
-            const filteredNotes = notes.filter(note => 
-                note.content.toLowerCase().includes(filter.toLowerCase()) || 
-                note.tags.some(tag => tag.toLowerCase().includes(filter.toLowerCase()))
-            );
+            const filteredNotes = filterNotes(filter);
             filteredNotes.forEach((note, index) => {
                 const li = document.createElement("li");
                 li.innerHTML = `
-                    <span style="color: ${note.color}">${note.content.slice(0, 30)}... (${note.tags.join(", ")}) - ${note.createdAt}</span>
+                    <span style="color: ${note.color}">${truncateText(note.content, 30)} (${note.tags.join(", ")}) - ${note.createdAt}</span>
                     <div class="note-actions">
+                        <button onclick="editNote(${index})"><i class="fas fa-edit"></i></button>
                         <button onclick="deleteNote(${index})"><i class="fas fa-trash"></i></button>
                     </div>
                 `;
-                li.onclick = (e) => {
-                    if (e.target.tagName !== "BUTTON" && e.target.tagName !== "I") loadNote(note);
-                };
                 notesList.appendChild(li);
             });
+        }
+
+        function filterNotes(filter) {
+            return notes.filter(note => 
+                note.content.toLowerCase().includes(filter.toLowerCase()) || 
+                note.tags.some(tag => tag.toLowerCase().includes(filter.toLowerCase()))
+            );
+        }
+
+        function truncateText(text, maxLength) {
+            return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
         }
 
         function saveNote() {
             const content = document.getElementById("note-input").value.trim();
             const tags = document.getElementById("tags-input").value.split(",").map(tag => tag.trim()).filter(tag => tag);
             const color = document.getElementById("note-input").style.color || "#1e293b";
-            
+
             if (!content) {
                 showNotification(currentLang === "ar" ? "يرجى كتابة ملاحظة" : "Please write a note", "error");
                 return;
@@ -496,19 +538,31 @@
                 content, 
                 tags, 
                 color, 
-                createdAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en") 
+                createdAt: editingIndex !== null && notes[editingIndex] ? notes[editingIndex].createdAt : new Date().toLocaleString(currentLang === "ar" ? "ar" : "en"),
+                updatedAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en")
             };
-            notes.push(note);
+
+            if (editingIndex !== null) {
+                notes[editingIndex] = note;
+                editingIndex = null;
+            } else {
+                notes.push(note);
+            }
+
             localStorage.setItem("luffyNotes", JSON.stringify(notes));
             clearNote();
             displayNotes();
-            showNotification(currentLang === "ar" ? "تم الحفظ بنجاح!" : "Saved successfully!", "success");
+            showNotification(currentLang === "ar" ? editingIndex !== null ? "تم التحديث!" : "تم الحفظ بنجاح!" : editingIndex !== null ? "Updated!" : "Saved successfully!", "success");
         }
 
-        function loadNote(note) {
+        function editNote(index) {
+            const note = notes[index];
             document.getElementById("note-input").value = note.content;
             document.getElementById("note-input").style.color = note.color;
             document.getElementById("tags-input").value = note.tags.join(", ");
+            editingIndex = index;
+            updateLanguage();
+            checkSaveButtonState();
         }
 
         function deleteNote(index) {
@@ -516,12 +570,19 @@
             localStorage.setItem("luffyNotes", JSON.stringify(notes));
             displayNotes();
             showNotification(currentLang === "ar" ? "تم الحذف!" : "Deleted!", "success");
+            if (editingIndex === index) {
+                clearNote();
+                editingIndex = null;
+            }
         }
 
         function clearNote() {
             document.getElementById("note-input").value = "";
             document.getElementById("tags-input").value = "";
             document.getElementById("note-input").style.color = "#1e293b";
+            editingIndex = null;
+            updateLanguage();
+            checkSaveButtonState();
         }
 
         function searchNotes() {
@@ -541,9 +602,19 @@
             if (content.includes("personal") || content.includes("شخصي")) suggestedTags.push("personal");
             if (content.includes("idea") || content.includes("فكرة")) suggestedTags.push("idea");
             if (content.includes("meeting") || content.includes("اجتماع")) suggestedTags.push("meeting");
+            if (content.includes("task") || content.includes("مهمة")) suggestedTags.push("task");
             tagsInput.value = suggestedTags.join(", ");
             showNotification(currentLang === "ar" ? "تم اقتراح الوسوم!" : "Tags suggested!", "success");
         }
+
+        function checkSaveButtonState() {
+            const saveBtn = document.querySelector(".save-btn");
+            saveBtn.disabled = !document.getElementById("note-input").value.trim();
+            saveBtn.style.opacity = saveBtn.disabled ? "0.6" : "1";
+            saveBtn.style.cursor = saveBtn.disabled ? "not-allowed" : "pointer";
+        }
+
+        document.getElementById("note-input").addEventListener("input", checkSaveButtonState);
 
         function showNotification(message, type) {
             const existing = document.querySelector(".notification");
