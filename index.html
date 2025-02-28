@@ -698,13 +698,13 @@
             <div class="logo-square">
                 <span class="logo-text">LN</span>
             </div>
-            <span class="class="site-title">LuffyNotes</span>
+            <span class="site-title">LuffyNotes</span>
         </div>
         <div class="header-actions">
-            <button class="toggle-mode" onclick="toggleDarkMode()">
+            <button class="toggle-mode dynamic-theme" data-light-bg="linear-gradient(45deg, #9333ea, #a855f7)" data-dark-bg="linear-gradient(45deg, #ec4899, #f472b6)" data-light-color="#fff" data-dark-color="#fff" onclick="toggleDarkMode()">
                 <i class="fas fa-moon"></i> <span class="lang-text" data-ar="الوضع الليلي" data-en="Dark Mode">الوضع الليلي</span>
             </button>
-            <button class="toggle-lang" onclick="toggleLanguage()">
+            <button class="toggle-lang dynamic-theme" data-light-bg="linear-gradient(45deg, #9333ea, #a855f7)" data-dark-bg="linear-gradient(45deg, #ec4899, #f472b6)" data-light-color="#fff" data-dark-color="#fff" onclick="toggleLanguage()">
                 <i class="fas fa-globe"></i> <span class="lang-text" data-ar="English" data-en="العربية">English</span>
             </button>
         </div>
@@ -713,24 +713,24 @@
     <div class="container">
         <div class="sidebar">
             <h2><i class="fas fa-sticky-note"></i> <span class="lang-text" data-ar="الملاحظات" data-en="Notes">الملاحظات</span></h2>
-            <input type="text" class="search-bar" id="search-input" placeholder="ابحث في الملاحظات..." data-en-placeholder="Search notes..." onkeyup="searchNotes()">
+            <input type="text" class="search-bar dynamic-theme" data-light-bg="#f9fafb" data-dark-bg="#2d3748" data-light-color="#1f2937" data-dark-color="#f7fafc" id="search-input" placeholder="ابحث في الملاحظات..." data-en-placeholder="Search notes..." onkeyup="searchNotes()">
             <ul id="notes-list"></ul>
         </div>
 
         <div class="editor">
             <div class="toolbar">
-                <button onclick="changeColor('#ef4444')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أحمر" data-en="Red">أحمر</span></button>
-                <button onclick="changeColor('#3b82f6')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أزرق" data-en="Blue">أزرق</span></button>
-                <button onclick="changeColor('#1f2937')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أسود" data-en="Black">أسود</span></button>
-                <button onclick="suggestTags()" title="Smart Tags"><i class="fas fa-brain"></i> <span class="lang-text" data-ar="وسوم ذكية" data-en="Smart Tags">وسوم ذكية</span></button>
+                <button class="dynamic-theme" data-light-bg="#f9fafb" data-dark-bg="#4a5568" data-light-color="#1f2937" data-dark-color="#f7fafc" onclick="changeColor('#ef4444')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أحمر" data-en="Red">أحمر</span></button>
+                <button class="dynamic-theme" data-light-bg="#f9fafb" data-dark-bg="#4a5568" data-light-color="#1f2937" data-dark-color="#f7fafc" onclick="changeColor('#3b82f6')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أزرق" data-en="Blue">أزرق</span></button>
+                <button class="dynamic-theme" data-light-bg="#f9fafb" data-dark-bg="#4a5568" data-light-color="#1f2937" data-dark-color="#f7fafc" onclick="changeColor('#1f2937')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أسود" data-en="Black">أسود</span></button>
+                <button class="dynamic-theme" data-light-bg="#f9fafb" data-dark-bg="#4a5568" data-light-color="#1f2937" data-dark-color="#f7fafc" onclick="suggestTags()" title="Smart Tags"><i class="fas fa-brain"></i> <span class="lang-text" data-ar="وسوم ذكية" data-en="Smart Tags">وسوم ذكية</span></button>
             </div>
             <textarea id="note-input" placeholder="اكتب ملاحظتك هنا..." data-en-placeholder="Write your note here..."></textarea>
             <div class="tags">
                 <input type="text" id="tags-input" placeholder="أضف وسوم (مفصولة بفواصل)" data-en-placeholder="Add tags (comma-separated)">
             </div>
             <div class="button-group">
-                <button onclick="saveNote()" class="save-btn"><i class="fas fa-save"></i> <span class="lang-text" data-ar="حفظ" data-en="Save">حفظ</span></button>
-                <button class="delete" onclick="deleteNote(0)"><i class="fas fa-trash"></i> <span class="lang-text" data-ar="مسح" data-en="Clear">مسح</span></button>
+                <button class="save-btn dynamic-theme" data-light-bg="linear-gradient(45deg, #10b981, #34d399)" data-dark-bg="linear-gradient(45deg, #ec4899, #fb7185)" data-light-color="#fff" data-dark-color="#fff" onclick="saveNote()"><i class="fas fa-save"></i> <span class="lang-text" data-ar="حفظ" data-en="Save">حفظ</span></button>
+                <button class="delete dynamic-theme" data-light-bg="linear-gradient(45deg, #ef4444, #f87171)" data-dark-bg="linear-gradient(45deg, #ec4899, #fb7185)" data-light-color="#fff" data-dark-color="#fff" onclick="clearNote()"><i class="fas fa-trash"></i> <span class="lang-text" data-ar="مسح" data-en="Clear">مسح</span></button>
             </div>
         </div>
     </div>
@@ -753,6 +753,7 @@
                 document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
                 displayNotes();
                 updateLanguage();
+                updateUIForTheme();
                 checkSaveButtonState();
                 console.log("DOM loaded, notes:", notes); // لتتبع الأخطاء
             });
@@ -762,6 +763,7 @@
                 isDarkMode = document.body.classList.contains("dark");
                 localStorage.setItem("luffyDarkMode", isDarkMode);
                 updateUIForTheme();
+                console.log("Toggled dark mode to:", isDarkMode);
             }
 
             function toggleLanguage() {
@@ -770,6 +772,7 @@
                 document.body.setAttribute("lang", currentLang);
                 document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
                 updateLanguage();
+                console.log("Toggled language to:", currentLang);
             }
 
             function updateLanguage() {
@@ -791,16 +794,18 @@
             function updateUIForTheme() {
                 const isDark = document.body.classList.contains("dark");
                 document.querySelectorAll(".dynamic-theme").forEach(element => {
-                    element.style.background = isDark 
-                        ? element.getAttribute("data-dark-bg") || var(--card-dark) 
-                        : element.getAttribute("data-light-bg") || var(--card-light);
-                    element.style.color = isDark 
-                        ? element.getAttribute("data-dark-color") || var(--text-dark) 
-                        : element.getAttribute("data-light-color") || var(--text-light);
+                    const lightBg = element.getAttribute("data-light-bg") || var(--card-light);
+                    const darkBg = element.getAttribute("data-dark-bg") || var(--card-dark);
+                    const lightColor = element.getAttribute("data-light-color") || var(--text-light);
+                    const darkColor = element.getAttribute("data-dark-color") || var(--text-dark);
+                    
+                    element.style.background = isDark ? darkBg : lightBg;
+                    element.style.color = isDark ? darkColor : lightColor;
                     element.style.boxShadow = isDark 
                         ? `0 3px 12px ${var(--shadow-dark)}` 
                         : `0 3px 12px ${var(--shadow-light)}`;
                 });
+                console.log("Updated UI for theme:", isDark ? "dark" : "light");
             }
 
             function displayNotes(filter = "") {
@@ -815,8 +820,8 @@
                     li.innerHTML = `
                         <span style="color: ${note.color}">${truncateText(note.content, 30)} (${note.tags.join(", ")}) - ${note.createdAt}</span>
                         <div class="note-actions">
-                            <button onclick="editNote(${index})" class="edit-btn"><i class="fas fa-edit"></i></button>
-                            <button onclick="deleteNote(${index})" class="delete-btn"><i class="fas fa-trash"></i></button>
+                            <button class="edit-btn dynamic-theme" data-light-bg="transparent" data-dark-bg="transparent" data-light-color="#1f2937" data-dark-color="#f7fafc" onclick="editNote(${index})"><i class="fas fa-edit"></i></button>
+                            <button class="delete-btn dynamic-theme" data-light-bg="transparent" data-dark-bg="transparent" data-light-color="#1f2937" data-dark-color="#f7fafc" onclick="deleteNote(${index})"><i class="fas fa-trash"></i></button>
                         </div>
                     `;
                     li.onclick = (e) => {
@@ -860,6 +865,7 @@
                     clearNote();
                     displayNotes();
                     showNotification(currentLang === "ar" ? (editingIndex !== null ? "تم التحديث!" : "تم الحفظ بنجاح!") : (editingIndex !== null ? "Updated!" : "Saved successfully!"), "success");
+                    console.log("Note saved/updated:", note);
                 } catch (error) {
                     console.error("Error saving note:", error);
                     showNotification(currentLang === "ar" ? "خطأ في الحفظ" : "Error saving note", "error");
@@ -867,13 +873,19 @@
             }
 
             function editNote(index) {
-                const note = notes[index];
-                document.getElementById("note-input").value = note.content;
-                document.getElementById("note-input").style.color = note.color;
-                document.getElementById("tags-input").value = note.tags.join(", ");
-                editingIndex = index;
-                updateLanguage();
-                checkSaveButtonState();
+                try {
+                    const note = notes[index];
+                    document.getElementById("note-input").value = note.content;
+                    document.getElementById("note-input").style.color = note.color;
+                    document.getElementById("tags-input").value = note.tags.join(", ");
+                    editingIndex = index;
+                    updateLanguage();
+                    checkSaveButtonState();
+                    console.log("Editing note at index:", index);
+                } catch (error) {
+                    console.error("Error editing note:", error);
+                    showNotification(currentLang === "ar" ? "خطأ في التحرير" : "Error editing note", "error");
+                }
             }
 
             function deleteNote(index) {
@@ -886,6 +898,7 @@
                         clearNote();
                         editingIndex = null;
                     }
+                    console.log("Note deleted at index:", index);
                 } catch (error) {
                     console.error("Error deleting note:", error);
                     showNotification(currentLang === "ar" ? "خطأ في الحذف" : "Error deleting note", "error");
@@ -899,15 +912,18 @@
                 editingIndex = null;
                 updateLanguage();
                 checkSaveButtonState();
+                console.log("Note cleared");
             }
 
             function searchNotes() {
                 const filter = document.getElementById("search-input").value.trim();
                 displayNotes(filter);
+                console.log("Searching notes with filter:", filter);
             }
 
             function changeColor(color) {
                 document.getElementById("note-input").style.color = color;
+                console.log("Changed note color to:", color);
             }
 
             function suggestTags() {
@@ -923,6 +939,7 @@
                 if (content.includes("urgent") || content.includes("عاجل")) suggestedTags.push("urgent");
                 tagsInput.value = suggestedTags.join(", ");
                 showNotification(currentLang === "ar" ? "تم اقتراح الوسوم الذكية!" : "Smart tags suggested!", "success");
+                console.log("Suggested tags:", suggestedTags);
             }
 
             function checkSaveButtonState() {
@@ -967,8 +984,9 @@
                 document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
                 displayNotes();
                 updateLanguage();
+                updateUIForTheme();
                 checkSaveButtonState();
-                console.log("DOM loaded, notes:", notes);
+                console.log("DOM loaded with fallback, notes:", notes);
             });
 
             // استمرار الكود هنا مع نفس الدوال السابقة...
