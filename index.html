@@ -6,6 +6,22 @@
     <title>LuffyNotes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
+        :root {
+            --primary-light: #3b82f6;
+            --secondary-light: #10b981;
+            --background-light: linear-gradient(145deg, #f3f4f6 0%, #e5e7eb 100%);
+            --card-light: rgba(255, 255, 255, 0.95);
+            --text-light: #1f2937;
+            --shadow-light: rgba(0, 0, 0, 0.05);
+
+            --primary-dark: #f43f5e;
+            --secondary-dark: #f59e0b;
+            --background-dark: linear-gradient(145deg, #111827 0%, #1f2937 100%);
+            --card-dark: rgba(17, 24, 39, 0.95);
+            --text-dark: #f3f4f6;
+            --shadow-dark: rgba(0, 0, 0, 0.1);
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -14,18 +30,18 @@
         }
 
         body {
-            background: linear-gradient(145deg, #f3f4f6 0%, #e5e7eb 100%);
-            color: #1f2937;
+            background: var(--background-light);
+            color: var(--text-light);
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            transition: background 0.5s ease;
+            transition: background 0.5s ease, color 0.5s ease;
         }
 
         body.dark {
-            background: linear-gradient(145deg, #111827 0%, #1f2937 100%);
-            color: #f3f4f6;
+            background: var(--background-dark);
+            color: var(--text-dark);
         }
 
         body[lang="en"] {
@@ -33,10 +49,10 @@
         }
 
         header {
-            background: rgba(255, 255, 255, 0.9);
+            background: var(--card-light);
             padding: 15px 20px;
             border-radius: 0 0 25px 25px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 20px var(--shadow-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -46,41 +62,45 @@
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(12px);
-            transition: background 0.5s ease;
+            transition: background 0.5s ease, box-shadow 0.5s ease;
         }
 
         body.dark header {
-            background: rgba(17, 24, 39, 0.9);
+            background: var(--card-dark);
+            box-shadow: 0 4px 20px var(--shadow-dark);
         }
 
         .logo {
             display: flex;
             align-items: center;
             gap: 12px;
-            transition: transform 0.3s ease;
+            transition: transform 0.3s ease-in-out;
         }
 
         .logo:hover {
             transform: scale(1.05);
         }
 
-        .logo-circle {
+        .logo-square {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #3b82f6, #10b981);
-            border-radius: 50%;
+            background: #f9a8d4;
+            border-radius: 8px;
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #fff;
-            font-size: 24px;
-            font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
+            box-shadow: 0 2px 10px var(--shadow-light);
+            transition: background 0.5s ease, box-shadow 0.5s ease;
         }
 
-        .logo-circle::before {
+        body.dark .logo-square {
+            background: #f472b6;
+            box-shadow: 0 2px 10px var(--shadow-dark);
+        }
+
+        .logo-square::before {
             content: '';
             position: absolute;
             width: 100%;
@@ -94,17 +114,26 @@
             50% { transform: scale(1.2); opacity: 1; }
         }
 
+        .logo-text {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+            position: relative;
+            z-index: 1;
+        }
+
         .site-title {
             font-size: 24px;
             font-weight: 700;
-            background: linear-gradient(90deg, #3b82f6, #10b981);
+            background: linear-gradient(90deg, var(--primary-light), var(--secondary-light));
             -webkit-background-clip: text;
             color: transparent;
             letter-spacing: 0.5px;
+            transition: background 0.5s ease;
         }
 
         body.dark .site-title {
-            background: linear-gradient(90deg, #f43f5e, #f59e0b);
+            background: linear-gradient(90deg, var(--primary-dark), var(--secondary-dark));
         }
 
         .header-actions {
@@ -114,33 +143,38 @@
 
         .toggle-mode, .toggle-lang {
             padding: 10px 18px;
-            background: linear-gradient(45deg, #3b82f6, #60a5fa);
+            background: linear-gradient(45deg, var(--primary-light), #60a5fa);
             color: #fff;
             border: none;
             border-radius: 25px;
             cursor: pointer;
             font-size: 14px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 2px 8px var(--shadow-light);
         }
 
         .toggle-mode:hover, .toggle-lang:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px var(--shadow-light);
         }
 
         body.dark .toggle-mode, body.dark .toggle-lang {
-            background: linear-gradient(45deg, #f43f5e, #fb923c);
+            background: linear-gradient(45deg, var(--primary-dark), #fb923c);
+            box-shadow: 0 2px 8px var(--shadow-dark);
+        }
+
+        body.dark .toggle-mode:hover, body.dark .toggle-lang:hover {
+            box-shadow: 0 4px 12px var(--shadow-dark);
         }
 
         .container {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr;
             gap: 20px;
             max-width: 1200px;
             margin: 20px auto;
-            flex-grow: 1;
             padding: 0 10px;
+            flex-grow: 1;
             animation: slideUp 0.6s ease-out;
         }
 
@@ -150,26 +184,25 @@
         }
 
         .sidebar, .editor {
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-light);
             border-radius: 20px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 6px 25px var(--shadow-light);
             padding: 20px;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease-in-out;
         }
 
         body.dark .sidebar, body.dark .editor {
-            background: rgba(17, 24, 39, 0.95);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            background: var(--card-dark);
+            box-shadow: 0 6px 25px var(--shadow-dark);
         }
 
         .sidebar {
-            flex: 1 1 100%;
             max-height: 50vh;
             overflow-y: auto;
         }
 
         .editor {
-            flex: 1 1 100%;
+            margin-bottom: 20px;
         }
 
         .search-bar {
@@ -180,8 +213,8 @@
             background: #f3f4f6;
             margin-bottom: 20px;
             font-size: 15px;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
-            transition: box-shadow 0.3s ease;
+            box-shadow: inset 0 2px 5px var(--shadow-light);
+            transition: box-shadow 0.3s ease-in-out;
         }
 
         .search-bar:focus {
@@ -191,7 +224,7 @@
 
         body.dark .search-bar {
             background: #374151;
-            color: #f3f4f6;
+            color: var(--text-dark);
         }
 
         #note-input {
@@ -203,9 +236,9 @@
             resize: vertical;
             font-size: 16px;
             background: #fff;
-            color: #1f2937;
-            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
+            color: var(--text-light);
+            box-shadow: inset 0 3px 8px var(--shadow-light);
+            transition: all 0.3s ease-in-out;
         }
 
         #note-input:focus {
@@ -215,7 +248,7 @@
 
         body.dark #note-input {
             background: #374151;
-            color: #f3f4f6;
+            color: var(--text-dark);
         }
 
         .toolbar {
@@ -228,22 +261,22 @@
         .toolbar button {
             padding: 10px 20px;
             background: #f3f4f6;
-            color: #1f2937;
+            color: var(--text-light);
             border-radius: 25px;
             font-size: 14px;
-            transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 2px 8px var(--shadow-light);
         }
 
         .toolbar button:hover {
             background: #e5e7eb;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 12px var(--shadow-light);
         }
 
         body.dark .toolbar button {
             background: #4a5568;
-            color: #f3f4f6;
+            color: var(--text-dark);
         }
 
         body.dark .toolbar button:hover {
@@ -261,8 +294,8 @@
             border-radius: 15px;
             font-size: 15px;
             background: #f3f4f6;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
-            transition: all 0.3s ease;
+            box-shadow: inset 0 2px 5px var(--shadow-light);
+            transition: all 0.3s ease-in-out;
         }
 
         .tags input:focus {
@@ -272,7 +305,7 @@
 
         body.dark .tags input {
             background: #374151;
-            color: #f3f4f6;
+            color: var(--text-dark);
         }
 
         .button-group {
@@ -291,13 +324,13 @@
             cursor: pointer;
             flex-grow: 1;
             font-size: 15px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease-in-out;
+            box-shadow: 0 4px 15px var(--shadow-light);
         }
 
         button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 6px 20px var(--shadow-light);
         }
 
         button.delete {
@@ -319,19 +352,19 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            border-left: 5px solid #3b82f6;
-            transition: all 0.3s ease;
+            border-left: 5px solid var(--primary-light);
+            transition: all 0.3s ease-in-out;
         }
 
         #notes-list li:hover {
             background: #e5e7eb;
             transform: translateX(5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            box-shadow: 0 4px 15px var(--shadow-light);
         }
 
         body.dark #notes-list li {
             background: #374151;
-            border-left-color: #f43f5e;
+            border-left-color: var(--primary-dark);
         }
 
         body.dark #notes-list li:hover {
@@ -349,7 +382,7 @@
             border-radius: 20px;
             background: transparent;
             color: inherit;
-            transition: all 0.3s ease;
+            transition: all 0.3s ease-in-out;
         }
 
         .note-actions button:hover {
@@ -371,9 +404,9 @@
             font-size: 16px;
             z-index: 1000;
             opacity: 0;
-            transition: opacity 0.5s, transform 0.3s;
+            transition: opacity 0.5s, transform 0.3s ease-in-out;
             background: linear-gradient(45deg, #10b981, #34d399);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 20px var(--shadow-light);
         }
 
         .notification.error {
@@ -386,15 +419,16 @@
             font-size: 15px;
             color: #6b7280;
             margin-top: 30px;
-            background: rgba(255, 255, 255, 0.95);
+            background: var(--card-light);
             border-radius: 20px 20px 0 0;
-            box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.05);
-            transition: background 0.5s ease;
+            box-shadow: 0 -6px 25px var(--shadow-light);
+            transition: background 0.5s ease, box-shadow 0.5s ease;
         }
 
         body.dark footer {
             color: #9ca3af;
-            background: rgba(17, 24, 39, 0.95);
+            background: var(--card-dark);
+            box-shadow: 0 -6px 25px var(--shadow-dark);
         }
 
         /* Media Queries للتوافق مع جميع الأجهزة */
@@ -404,9 +438,12 @@
                 border-radius: 0 0 15px 15px;
             }
 
-            .logo-circle {
+            .logo-square {
                 width: 30px;
                 height: 30px;
+            }
+
+            .logo-text {
                 font-size: 18px;
             }
 
@@ -490,9 +527,12 @@
                 border-radius: 0 0 20px 20px;
             }
 
-            .logo-circle {
+            .logo-square {
                 width: 35px;
                 height: 35px;
+            }
+
+            .logo-text {
                 font-size: 20px;
             }
 
@@ -571,13 +611,18 @@
         }
 
         @media (min-width: 768px) {
-            .sidebar { flex: 1 1 340px; max-height: 75vh; }
-            .editor { flex: 2 1 500px; }
+            .container {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            }
+
+            .sidebar { max-height: 75vh; }
+            .editor { margin-bottom: 0; }
+
             header { padding: 20px 30px; }
-            .logo-circle { width: 50px; height: 50px; font-size: 28px; }
+            .logo-square { width: 50px; height: 50px; }
+            .logo-text { font-size: 28px; }
             .site-title { font-size: 32px; }
             .header-actions button { padding: 12px 25px; font-size: 15px; }
-            .container { margin: 40px auto; gap: 25px; padding: 0 20px; }
             .sidebar, .editor { padding: 25px; border-radius: 25px; }
             .search-bar { padding: 14px 25px; font-size: 16px; border-radius: 30px; }
             #note-input { min-height: 220px; padding: 18px; font-size: 17px; border-radius: 20px; }
@@ -593,7 +638,9 @@
 <body>
     <header>
         <div class="logo">
-            <div class="logo-circle">L</div>
+            <div class="logo-square">
+                <span class="logo-text">LN</span>
+            </div>
             <span class="site-title">LuffyNotes</span>
         </div>
         <div class="header-actions">
@@ -654,7 +701,7 @@
             document.body.classList.toggle("dark");
             isDarkMode = document.body.classList.contains("dark");
             localStorage.setItem("luffyDarkMode", isDarkMode);
-            updateLanguage();
+            updateUIForTheme();
         }
 
         function toggleLanguage() {
@@ -679,6 +726,18 @@
             saveBtn.textContent = editingIndex !== null 
                 ? (currentLang === "ar" ? "تحديث" : "Update") 
                 : (currentLang === "ar" ? "حفظ" : "Save");
+        }
+
+        function updateUIForTheme() {
+            const isDark = document.body.classList.contains("dark");
+            document.querySelectorAll(".dynamic-theme").forEach(element => {
+                element.style.background = isDark 
+                    ? element.getAttribute("data-dark-bg") 
+                    : element.getAttribute("data-light-bg");
+                element.style.color = isDark 
+                    ? element.getAttribute("data-dark-color") 
+                    : element.getAttribute("data-light-color");
+            });
         }
 
         function displayNotes(filter = "") {
@@ -736,7 +795,7 @@
             localStorage.setItem("luffyNotes", JSON.stringify(notes));
             clearNote();
             displayNotes();
-            showNotification(currentLang === "ar" ? editingIndex !== null ? "تم التحديث!" : "تم الحفظ بنجاح!" : editingIndex !== null ? "Updated!" : "Saved successfully!", "success");
+            showNotification(currentLang === "ar" ? (editingIndex !== null ? "تم التحديث!" : "تم الحفظ بنجاح!") : (editingIndex !== null ? "Updated!" : "Saved successfully!"), "success");
         }
 
         function editNote(index) {
@@ -787,6 +846,7 @@
             if (content.includes("idea") || content.includes("فكرة")) suggestedTags.push("idea");
             if (content.includes("meeting") || content.includes("اجتماع")) suggestedTags.push("meeting");
             if (content.includes("task") || content.includes("مهمة")) suggestedTags.push("task");
+            if (content.includes("project") || content.includes("مشروع")) suggestedTags.push("project");
             tagsInput.value = suggestedTags.join(", ");
             showNotification(currentLang === "ar" ? "تم اقتراح الوسوم!" : "Tags suggested!", "success");
         }
