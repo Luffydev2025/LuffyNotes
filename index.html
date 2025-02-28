@@ -7,15 +7,15 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --primary-light: #9333ea; /* بنفسجي غامض */
-            --secondary-light: #f472b6; /* وردي فاتح */
+            --primary-light: #9333ea;
+            --secondary-light: #f472b6;
             --background-light: linear-gradient(135deg, #f5f5f5 0%, #e5e7eb 100%);
             --card-light: rgba(255, 255, 255, 0.95);
             --text-light: #1e1b4b;
             --shadow-light: rgba(0, 0, 0, 0.05);
 
-            --primary-dark: #ec4899; /* وردي غامض */
-            --secondary-dark: #f59e0b; /* برتقالي مشرق */
+            --primary-dark: #ec4899;
+            --secondary-dark: #f59e0b;
             --background-dark: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
             --card-dark: rgba(26, 32, 44, 0.95);
             --text-dark: #f7fafc;
@@ -142,6 +142,11 @@
         .header-actions {
             display: flex;
             gap: 15px;
+        }
+
+        .toggle-mode, .toggle-lang, .toolbar button, button, .note-actions button {
+            pointer-events: auto !important; /* تأكد من أن الأزرار قابلة للتفاعل */
+            cursor: pointer !important;
         }
 
         .toggle-mode, .toggle-lang {
@@ -693,7 +698,7 @@
             <div class="logo-square">
                 <span class="logo-text">LN</span>
             </div>
-            <span class="site-title">LuffyNotes</span>
+            <span class="class="site-title">LuffyNotes</span>
         </div>
         <div class="header-actions">
             <button class="toggle-mode" onclick="toggleDarkMode()">
@@ -725,7 +730,7 @@
             </div>
             <div class="button-group">
                 <button onclick="saveNote()" class="save-btn"><i class="fas fa-save"></i> <span class="lang-text" data-ar="حفظ" data-en="Save">حفظ</span></button>
-                <button class="delete" onclick="clearNote()"><i class="fas fa-trash"></i> <span class="lang-text" data-ar="مسح" data-en="Clear">مسح</span></button>
+                <button class="delete" onclick="deleteNote(0)"><i class="fas fa-trash"></i> <span class="lang-text" data-ar="مسح" data-en="Clear">مسح</span></button>
             </div>
         </div>
     </div>
@@ -735,6 +740,7 @@
     </footer>
 
     <script>
+        // تحميل خطوط Poppins قبل تنفيذ الكود
         document.fonts.load('16px Poppins').then(() => {
             let notes = JSON.parse(localStorage.getItem("luffyNotes")) || [];
             let currentLang = localStorage.getItem("luffyLang") || "ar";
@@ -748,6 +754,7 @@
                 displayNotes();
                 updateLanguage();
                 checkSaveButtonState();
+                console.log("DOM loaded, notes:", notes); // لتتبع الأخطاء
             });
 
             function toggleDarkMode() {
@@ -785,11 +792,11 @@
                 const isDark = document.body.classList.contains("dark");
                 document.querySelectorAll(".dynamic-theme").forEach(element => {
                     element.style.background = isDark 
-                        ? element.getAttribute("data-dark-bg") 
-                        : element.getAttribute("data-light-bg");
+                        ? element.getAttribute("data-dark-bg") || var(--card-dark) 
+                        : element.getAttribute("data-light-bg") || var(--card-light);
                     element.style.color = isDark 
-                        ? element.getAttribute("data-dark-color") 
-                        : element.getAttribute("data-light-color");
+                        ? element.getAttribute("data-dark-color") || var(--text-dark) 
+                        : element.getAttribute("data-light-color") || var(--text-light);
                     element.style.boxShadow = isDark 
                         ? `0 3px 12px ${var(--shadow-dark)}` 
                         : `0 3px 12px ${var(--shadow-light)}`;
@@ -824,34 +831,39 @@
             }
 
             function saveNote() {
-                const content = document.getElementById("note-input").value.trim();
-                const tags = document.getElementById("tags-input").value.split(",").map(tag => tag.trim()).filter(tag => tag);
-                const color = document.getElementById("note-input").style.color || "#1f2937";
+                try {
+                    const content = document.getElementById("note-input").value.trim();
+                    const tags = document.getElementById("tags-input").value.split(",").map(tag => tag.trim()).filter(tag => tag);
+                    const color = document.getElementById("note-input").style.color || "#1f2937";
 
-                if (!content) {
-                    showNotification(currentLang === "ar" ? "يرجى كتابة ملاحظة" : "Please write a note", "error");
-                    return;
+                    if (!content) {
+                        showNotification(currentLang === "ar" ? "يرجى كتابة ملاحظة" : "Please write a note", "error");
+                        return;
+                    }
+
+                    const note = { 
+                        content, 
+                        tags, 
+                        color, 
+                        createdAt: editingIndex !== null && notes[editingIndex] ? notes[editingIndex].createdAt : new Date().toLocaleString(currentLang === "ar" ? "ar" : "en"),
+                        updatedAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en")
+                    };
+
+                    if (editingIndex !== null) {
+                        notes[editingIndex] = note;
+                        editingIndex = null;
+                    } else {
+                        notes.push(note);
+                    }
+
+                    localStorage.setItem("luffyNotes", JSON.stringify(notes));
+                    clearNote();
+                    displayNotes();
+                    showNotification(currentLang === "ar" ? (editingIndex !== null ? "تم التحديث!" : "تم الحفظ بنجاح!") : (editingIndex !== null ? "Updated!" : "Saved successfully!"), "success");
+                } catch (error) {
+                    console.error("Error saving note:", error);
+                    showNotification(currentLang === "ar" ? "خطأ في الحفظ" : "Error saving note", "error");
                 }
-
-                const note = { 
-                    content, 
-                    tags, 
-                    color, 
-                    createdAt: editingIndex !== null && notes[editingIndex] ? notes[editingIndex].createdAt : new Date().toLocaleString(currentLang === "ar" ? "ar" : "en"),
-                    updatedAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en")
-                };
-
-                if (editingIndex !== null) {
-                    notes[editingIndex] = note;
-                    editingIndex = null;
-                } else {
-                    notes.push(note);
-                }
-
-                localStorage.setItem("luffyNotes", JSON.stringify(notes));
-                clearNote();
-                displayNotes();
-                showNotification(currentLang === "ar" ? (editingIndex !== null ? "تم التحديث!" : "تم الحفظ بنجاح!") : (editingIndex !== null ? "Updated!" : "Saved successfully!"), "success");
             }
 
             function editNote(index) {
@@ -865,13 +877,18 @@
             }
 
             function deleteNote(index) {
-                notes.splice(index, 1);
-                localStorage.setItem("luffyNotes", JSON.stringify(notes));
-                displayNotes();
-                showNotification(currentLang === "ar" ? "تم الحذف!" : "Deleted!", "success");
-                if (editingIndex === index) {
-                    clearNote();
-                    editingIndex = null;
+                try {
+                    notes.splice(index, 1);
+                    localStorage.setItem("luffyNotes", JSON.stringify(notes));
+                    displayNotes();
+                    showNotification(currentLang === "ar" ? "تم الحذف!" : "Deleted!", "success");
+                    if (editingIndex === index) {
+                        clearNote();
+                        editingIndex = null;
+                    }
+                } catch (error) {
+                    console.error("Error deleting note:", error);
+                    showNotification(currentLang === "ar" ? "خطأ في الحذف" : "Error deleting note", "error");
                 }
             }
 
@@ -936,6 +953,25 @@
                     setTimeout(() => noti.remove(), 600);
                 }, 3500);
             }
+        }).catch(error => {
+            console.error("Error loading fonts:", error);
+            // استمر في تنفيذ الكود إذا فشل تحميل الخطوط
+            let notes = JSON.parse(localStorage.getItem("luffyNotes")) || [];
+            let currentLang = localStorage.getItem("luffyLang") || "ar";
+            let isDarkMode = localStorage.getItem("luffyDarkMode") === "true";
+            let editingIndex = null;
+
+            document.addEventListener("DOMContentLoaded", () => {
+                if (isDarkMode) document.body.classList.add("dark");
+                document.body.setAttribute("lang", currentLang);
+                document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
+                displayNotes();
+                updateLanguage();
+                checkSaveButtonState();
+                console.log("DOM loaded, notes:", notes);
+            });
+
+            // استمرار الكود هنا مع نفس الدوال السابقة...
         });
     </script>
 </body>
