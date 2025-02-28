@@ -7,27 +7,29 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
         :root {
-            --primary-light: #3b82f6;
-            --secondary-light: #10b981;
-            --background-light: linear-gradient(145deg, #f3f4f6 0%, #e5e7eb 100%);
+            --primary-light: #9333ea; /* بنفسجي غامض */
+            --secondary-light: #f472b6; /* وردي فاتح */
+            --background-light: linear-gradient(135deg, #f5f5f5 0%, #e5e7eb 100%);
             --card-light: rgba(255, 255, 255, 0.95);
-            --text-light: #1f2937;
+            --text-light: #1e1b4b;
             --shadow-light: rgba(0, 0, 0, 0.05);
 
-            --primary-dark: #f43f5e;
-            --secondary-dark: #f59e0b;
-            --background-dark: linear-gradient(145deg, #111827 0%, #1f2937 100%);
-            --card-dark: rgba(17, 24, 39, 0.95);
-            --text-dark: #f3f4f6;
-            --shadow-dark: rgba(0, 0, 0, 0.1);
+            --primary-dark: #ec4899; /* وردي غامض */
+            --secondary-dark: #f59e0b; /* برتقالي مشرق */
+            --background-dark: linear-gradient(135deg, #1a202c 0%, #2d3748 100%);
+            --card-dark: rgba(26, 32, 44, 0.95);
+            --text-dark: #f7fafc;
+            --shadow-dark: rgba(0, 0, 0, 0.15);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Segoe UI', 'Noto Sans Arabic', Arial, sans-serif;
+            font-family: 'Poppins', 'Noto Sans Arabic', sans-serif;
         }
+
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
 
         body {
             background: var(--background-light);
@@ -36,7 +38,7 @@
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            transition: background 0.5s ease, color 0.5s ease;
+            transition: background 0.6s ease-in-out, color 0.6s ease-in-out;
         }
 
         body.dark {
@@ -50,54 +52,54 @@
 
         header {
             background: var(--card-light);
-            padding: 15px 20px;
-            border-radius: 0 0 25px 25px;
-            box-shadow: 0 4px 20px var(--shadow-light);
+            padding: 15px 25px;
+            border-radius: 0 0 30px 30px;
+            box-shadow: 0 8px 30px var(--shadow-light);
             display: flex;
             justify-content: space-between;
             align-items: center;
             flex-wrap: wrap;
-            gap: 10px;
+            gap: 15px;
             position: sticky;
             top: 0;
             z-index: 1000;
-            backdrop-filter: blur(12px);
-            transition: background 0.5s ease, box-shadow 0.5s ease;
+            backdrop-filter: blur(15px);
+            transition: background 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
         }
 
         body.dark header {
             background: var(--card-dark);
-            box-shadow: 0 4px 20px var(--shadow-dark);
+            box-shadow: 0 8px 30px var(--shadow-dark);
         }
 
         .logo {
             display: flex;
             align-items: center;
-            gap: 12px;
-            transition: transform 0.3s ease-in-out;
+            gap: 15px;
+            transition: transform 0.4s ease-in-out;
         }
 
         .logo:hover {
-            transform: scale(1.05);
+            transform: scale(1.08);
         }
 
         .logo-square {
-            width: 40px;
-            height: 40px;
-            background: #f9a8d4;
-            border-radius: 8px;
+            width: 45px;
+            height: 45px;
+            background: var(--secondary-light);
+            border-radius: 12px;
             display: flex;
             align-items: center;
             justify-content: center;
             position: relative;
             overflow: hidden;
-            box-shadow: 0 2px 10px var(--shadow-light);
-            transition: background 0.5s ease, box-shadow 0.5s ease;
+            box-shadow: 0 4px 15px var(--shadow-light);
+            transition: background 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
         }
 
         body.dark .logo-square {
-            background: #f472b6;
-            box-shadow: 0 2px 10px var(--shadow-dark);
+            background: var(--secondary-dark);
+            box-shadow: 0 4px 15px var(--shadow-dark);
         }
 
         .logo-square::before {
@@ -105,31 +107,32 @@
             position: absolute;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle, rgba(255, 255, 255, 0.2) 10%, transparent 60%);
-            animation: glow 3s infinite ease-in-out;
+            background: radial-gradient(circle, rgba(255, 255, 255, 0.3) 15%, transparent 70%);
+            animation: pulse 4s infinite ease-in-out;
         }
 
-        @keyframes glow {
-            0%, 100% { transform: scale(1); opacity: 0.5; }
-            50% { transform: scale(1.2); opacity: 1; }
+        @keyframes pulse {
+            0%, 100% { transform: scale(1); opacity: 0.6; }
+            50% { transform: scale(1.15); opacity: 1; }
         }
 
         .logo-text {
-            font-size: 24px;
-            font-weight: bold;
+            font-size: 28px;
+            font-weight: 700;
             color: #fff;
             position: relative;
             z-index: 1;
+            text-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
         }
 
         .site-title {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: 700;
             background: linear-gradient(90deg, var(--primary-light), var(--secondary-light));
             -webkit-background-clip: text;
             color: transparent;
-            letter-spacing: 0.5px;
-            transition: background 0.5s ease;
+            letter-spacing: 1px;
+            transition: background 0.6s ease-in-out;
         }
 
         body.dark .site-title {
@@ -138,67 +141,87 @@
 
         .header-actions {
             display: flex;
-            gap: 10px;
+            gap: 15px;
         }
 
         .toggle-mode, .toggle-lang {
-            padding: 10px 18px;
-            background: linear-gradient(45deg, var(--primary-light), #60a5fa);
+            padding: 12px 22px;
+            background: linear-gradient(45deg, var(--primary-light), #a855f7);
             color: #fff;
             border: none;
-            border-radius: 25px;
+            border-radius: 30px;
             cursor: pointer;
-            font-size: 14px;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 2px 8px var(--shadow-light);
+            font-size: 15px;
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 3px 12px var(--shadow-light);
+            font-weight: 600;
         }
 
         .toggle-mode:hover, .toggle-lang:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow-light);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 6px 20px var(--shadow-light);
         }
 
         body.dark .toggle-mode, body.dark .toggle-lang {
-            background: linear-gradient(45deg, var(--primary-dark), #fb923c);
-            box-shadow: 0 2px 8px var(--shadow-dark);
+            background: linear-gradient(45deg, var(--primary-dark), #f472b6);
+            box-shadow: 0 3px 12px var(--shadow-dark);
         }
 
         body.dark .toggle-mode:hover, body.dark .toggle-lang:hover {
-            box-shadow: 0 4px 12px var(--shadow-dark);
+            box-shadow: 0 6px 20px var(--shadow-dark);
         }
 
         .container {
             display: grid;
             grid-template-columns: 1fr;
-            gap: 20px;
-            max-width: 1200px;
-            margin: 20px auto;
-            padding: 0 10px;
+            gap: 25px;
+            max-width: 1300px;
+            margin: 25px auto;
+            padding: 0 15px;
             flex-grow: 1;
-            animation: slideUp 0.6s ease-out;
+            animation: fadeInSlideUp 0.8s ease-out;
         }
 
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(30px); }
+        @keyframes fadeInSlideUp {
+            from { opacity: 0; transform: translateY(40px); }
             to { opacity: 1; transform: translateY(0); }
         }
 
         .sidebar, .editor {
             background: var(--card-light);
-            border-radius: 20px;
-            box-shadow: 0 6px 25px var(--shadow-light);
-            padding: 20px;
-            transition: all 0.3s ease-in-out;
+            border-radius: 25px;
+            box-shadow: 0 10px 35px var(--shadow-light);
+            padding: 25px;
+            transition: all 0.4s ease-in-out;
         }
 
         body.dark .sidebar, body.dark .editor {
             background: var(--card-dark);
-            box-shadow: 0 6px 25px var(--shadow-dark);
+            box-shadow: 0 10px 35px var(--shadow-dark);
         }
 
         .sidebar {
             max-height: 50vh;
             overflow-y: auto;
+            scrollbar-width: thin;
+            scrollbar-color: var(--primary-light) transparent;
+        }
+
+        .sidebar::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        .sidebar::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        .sidebar::-webkit-scrollbar-thumb {
+            background: var(--primary-light);
+            border-radius: 10px;
+        }
+
+        body.dark .sidebar::-webkit-scrollbar-thumb {
+            background: var(--primary-dark);
         }
 
         .editor {
@@ -207,71 +230,76 @@
 
         .search-bar {
             width: 100%;
-            padding: 12px 20px;
+            padding: 14px 25px;
             border: none;
-            border-radius: 25px;
-            background: #f3f4f6;
-            margin-bottom: 20px;
-            font-size: 15px;
-            box-shadow: inset 0 2px 5px var(--shadow-light);
-            transition: box-shadow 0.3s ease-in-out;
+            border-radius: 30px;
+            background: #f9fafb;
+            margin-bottom: 25px;
+            font-size: 16px;
+            box-shadow: inset 0 3px 8px var(--shadow-light);
+            transition: box-shadow 0.4s ease-in-out;
+            font-weight: 500;
         }
 
         .search-bar:focus {
             outline: none;
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
         }
 
         body.dark .search-bar {
-            background: #374151;
+            background: #2d3748;
             color: var(--text-dark);
+            box-shadow: inset 0 3px 8px var(--shadow-dark);
         }
 
         #note-input {
             width: 100%;
-            min-height: 180px;
-            padding: 15px;
+            min-height: 200px;
+            padding: 18px 20px;
             border: none;
-            border-radius: 15px;
+            border-radius: 20px;
             resize: vertical;
-            font-size: 16px;
+            font-size: 17px;
             background: #fff;
             color: var(--text-light);
-            box-shadow: inset 0 3px 8px var(--shadow-light);
-            transition: all 0.3s ease-in-out;
+            box-shadow: inset 0 4px 12px var(--shadow-light);
+            transition: all 0.4s ease-in-out;
+            font-weight: 500;
         }
 
         #note-input:focus {
             outline: none;
-            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 20px rgba(147, 51, 234, 0.3);
         }
 
         body.dark #note-input {
-            background: #374151;
+            background: #2d3748;
             color: var(--text-dark);
+            box-shadow: inset 0 4px 12px var(--shadow-dark);
         }
 
         .toolbar {
-            margin: 15px 0;
+            margin: 20px 0;
             display: flex;
-            gap: 12px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         .toolbar button {
-            padding: 10px 20px;
-            background: #f3f4f6;
+            padding: 12px 25px;
+            background: #f9fafb;
             color: var(--text-light);
-            border-radius: 25px;
-            font-size: 14px;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 2px 8px var(--shadow-light);
+            border-radius: 30px;
+            font-size: 15px;
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 3px 10px var(--shadow-light);
+            font-weight: 600;
         }
 
         .toolbar button:hover {
             background: #e5e7eb;
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px var(--shadow-light);
+            transform: translateY(-2px) scale(1.02);
+            box-shadow: 0 6px 18px var(--shadow-light);
         }
 
         body.dark .toolbar button {
@@ -284,57 +312,60 @@
         }
 
         .tags {
-            margin-top: 15px;
+            margin-top: 20px;
         }
 
         .tags input {
             width: 100%;
-            padding: 12px 20px;
+            padding: 14px 25px;
             border: none;
-            border-radius: 15px;
-            font-size: 15px;
-            background: #f3f4f6;
-            box-shadow: inset 0 2px 5px var(--shadow-light);
-            transition: all 0.3s ease-in-out;
+            border-radius: 20px;
+            font-size: 16px;
+            background: #f9fafb;
+            box-shadow: inset 0 3px 8px var(--shadow-light);
+            transition: all 0.4s ease-in-out;
+            font-weight: 500;
         }
 
         .tags input:focus {
             outline: none;
-            box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
+            box-shadow: 0 0 15px rgba(147, 51, 234, 0.3);
         }
 
         body.dark .tags input {
-            background: #374151;
+            background: #2d3748;
             color: var(--text-dark);
+            box-shadow: inset 0 3px 8px var(--shadow-dark);
         }
 
         .button-group {
-            margin-top: 20px;
+            margin-top: 25px;
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
         }
 
         button {
-            padding: 12px 25px;
-            background: linear-gradient(45deg, #10b981, #34d399);
+            padding: 14px 30px;
+            background: linear-gradient(45deg, var(--secondary-light), #f0abfc);
             color: #fff;
             border: none;
-            border-radius: 30px;
+            border-radius: 35px;
             cursor: pointer;
             flex-grow: 1;
-            font-size: 15px;
-            transition: all 0.3s ease-in-out;
-            box-shadow: 0 4px 15px var(--shadow-light);
+            font-size: 16px;
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 5px 20px var(--shadow-light);
+            font-weight: 600;
         }
 
         button:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px var(--shadow-light);
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 25px var(--shadow-light);
         }
 
         button.delete {
-            background: linear-gradient(45deg, #ef4444, #f87171);
+            background: linear-gradient(45deg, var(--primary-dark), #fb7185);
         }
 
         #notes-list {
@@ -342,109 +373,117 @@
         }
 
         #notes-list li {
-            padding: 15px;
+            padding: 18px;
             background: #f9fafb;
-            margin-bottom: 15px;
-            border-radius: 15px;
+            margin-bottom: 18px;
+            border-radius: 20px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 16px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 15px;
-            border-left: 5px solid var(--primary-light);
-            transition: all 0.3s ease-in-out;
+            gap: 20px;
+            border-left: 6px solid var(--primary-light);
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 4px 15px var(--shadow-light);
         }
 
         #notes-list li:hover {
             background: #e5e7eb;
-            transform: translateX(5px);
-            box-shadow: 0 4px 15px var(--shadow-light);
+            transform: translateX(5px) scale(1.02);
+            box-shadow: 0 6px 20px var(--shadow-light);
         }
 
         body.dark #notes-list li {
-            background: #374151;
+            background: #2d3748;
             border-left-color: var(--primary-dark);
+            box-shadow: 0 4px 15px var(--shadow-dark);
         }
 
         body.dark #notes-list li:hover {
             background: #4a5568;
+            box-shadow: 0 6px 20px var(--shadow-dark);
         }
 
         .note-actions {
             display: flex;
-            gap: 10px;
+            gap: 12px;
         }
 
         .note-actions button {
-            padding: 8px 15px;
-            font-size: 14px;
-            border-radius: 20px;
+            padding: 10px 18px;
+            font-size: 15px;
+            border-radius: 25px;
             background: transparent;
             color: inherit;
-            transition: all 0.3s ease-in-out;
+            transition: all 0.4s ease-in-out;
+            box-shadow: 0 2px 8px var(--shadow-light);
         }
 
         .note-actions button:hover {
             background: rgba(0, 0, 0, 0.05);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px var(--shadow-light);
         }
 
         body.dark .note-actions button:hover {
             background: rgba(255, 255, 255, 0.05);
+            box-shadow: 0 4px 12px var(--shadow-dark);
         }
 
         .notification {
             position: fixed;
-            top: 20px;
+            top: 25px;
             left: 50%;
             transform: translateX(-50%);
-            padding: 15px 30px;
-            border-radius: 15px;
+            padding: 18px 35px;
+            border-radius: 20px;
             color: #fff;
-            font-size: 16px;
+            font-size: 17px;
             z-index: 1000;
             opacity: 0;
-            transition: opacity 0.5s, transform 0.3s ease-in-out;
-            background: linear-gradient(45deg, #10b981, #34d399);
-            box-shadow: 0 6px 20px var(--shadow-light);
+            transition: opacity 0.6s ease-in-out, transform 0.4s ease-in-out;
+            background: linear-gradient(45deg, var(--secondary-light), #f0abfc);
+            box-shadow: 0 8px 25px var(--shadow-light);
+            font-weight: 600;
         }
 
         .notification.error {
-            background: linear-gradient(45deg, #ef4444, #f87171);
+            background: linear-gradient(45deg, var(--primary-dark), #fb7185);
         }
 
         footer {
             text-align: center;
-            padding: 20px;
-            font-size: 15px;
+            padding: 25px;
+            font-size: 16px;
             color: #6b7280;
-            margin-top: 30px;
+            margin-top: 35px;
             background: var(--card-light);
-            border-radius: 20px 20px 0 0;
-            box-shadow: 0 -6px 25px var(--shadow-light);
-            transition: background 0.5s ease, box-shadow 0.5s ease;
+            border-radius: 25px 25px 0 0;
+            box-shadow: 0 -8px 30px var(--shadow-light);
+            transition: background 0.6s ease-in-out, box-shadow 0.6s ease-in-out;
         }
 
         body.dark footer {
             color: #9ca3af;
             background: var(--card-dark);
-            box-shadow: 0 -6px 25px var(--shadow-dark);
+            box-shadow: 0 -8px 30px var(--shadow-dark);
         }
 
         /* Media Queries للتوافق مع جميع الأجهزة */
         @media (max-width: 480px) {
             header {
-                padding: 10px;
+                padding: 10px 15px;
                 border-radius: 0 0 15px 15px;
             }
 
             .logo-square {
-                width: 30px;
-                height: 30px;
+                width: 35px;
+                height: 35px;
             }
 
             .logo-text {
-                font-size: 18px;
+                font-size: 20px;
             }
 
             .site-title {
@@ -452,14 +491,14 @@
             }
 
             .header-actions button {
-                padding: 8px 12px;
-                font-size: 12px;
+                padding: 8px 15px;
+                font-size: 13px;
                 border-radius: 20px;
             }
 
             .container {
-                margin: 10px auto;
-                gap: 10px;
+                margin: 15px auto;
+                gap: 15px;
                 padding: 0 5px;
             }
 
@@ -470,7 +509,7 @@
             }
 
             .search-bar {
-                padding: 10px 15px;
+                padding: 12px 15px;
                 font-size: 14px;
                 border-radius: 20px;
             }
@@ -489,7 +528,7 @@
             }
 
             .tags input {
-                padding: 10px 15px;
+                padding: 12px 15px;
                 font-size: 14px;
                 border-radius: 12px;
             }
@@ -513,6 +552,12 @@
                 border-radius: 15px;
             }
 
+            .notification {
+                padding: 12px 25px;
+                font-size: 15px;
+                border-radius: 15px;
+            }
+
             footer {
                 padding: 15px;
                 font-size: 14px;
@@ -523,17 +568,17 @@
 
         @media (min-width: 481px) and (max-width: 767px) {
             header {
-                padding: 15px 15px;
+                padding: 15px 20px;
                 border-radius: 0 0 20px 20px;
             }
 
             .logo-square {
-                width: 35px;
-                height: 35px;
+                width: 40px;
+                height: 40px;
             }
 
             .logo-text {
-                font-size: 20px;
+                font-size: 24px;
             }
 
             .site-title {
@@ -541,14 +586,14 @@
             }
 
             .header-actions button {
-                padding: 8px 15px;
-                font-size: 13px;
-                border-radius: 20px;
+                padding: 10px 18px;
+                font-size: 14px;
+                border-radius: 25px;
             }
 
             .container {
-                margin: 15px auto;
-                gap: 15px;
+                margin: 20px auto;
+                gap: 20px;
                 padding: 0 10px;
             }
 
@@ -559,7 +604,7 @@
             }
 
             .search-bar {
-                padding: 12px 20px;
+                padding: 14px 20px;
                 font-size: 15px;
                 border-radius: 25px;
             }
@@ -578,7 +623,7 @@
             }
 
             .tags input {
-                padding: 12px 20px;
+                padding: 14px 20px;
                 font-size: 15px;
                 border-radius: 15px;
             }
@@ -602,6 +647,12 @@
                 border-radius: 20px;
             }
 
+            .notification {
+                padding: 15px 30px;
+                font-size: 16px;
+                border-radius: 18px;
+            }
+
             footer {
                 padding: 20px;
                 font-size: 15px;
@@ -612,26 +663,27 @@
 
         @media (min-width: 768px) {
             .container {
-                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             }
 
             .sidebar { max-height: 75vh; }
             .editor { margin-bottom: 0; }
 
-            header { padding: 20px 30px; }
-            .logo-square { width: 50px; height: 50px; }
-            .logo-text { font-size: 28px; }
-            .site-title { font-size: 32px; }
-            .header-actions button { padding: 12px 25px; font-size: 15px; }
-            .sidebar, .editor { padding: 25px; border-radius: 25px; }
-            .search-bar { padding: 14px 25px; font-size: 16px; border-radius: 30px; }
-            #note-input { min-height: 220px; padding: 18px; font-size: 17px; border-radius: 20px; }
-            .toolbar button { padding: 12px 25px; font-size: 15px; border-radius: 30px; }
-            .tags input { padding: 14px 25px; font-size: 16px; border-radius: 20px; }
-            .button-group button { padding: 14px 30px; font-size: 16px; border-radius: 35px; }
-            #notes-list li { padding: 18px; font-size: 16px; border-radius: 20px; gap: 20px; }
-            .note-actions button { padding: 10px 18px; font-size: 14px; border-radius: 25px; }
-            footer { padding: 25px; font-size: 16px; margin-top: 40px; border-radius: 25px 25px 0 0; }
+            header { padding: 25px 40px; }
+            .logo-square { width: 60px; height: 60px; }
+            .logo-text { font-size: 36px; }
+            .site-title { font-size: 36px; }
+            .header-actions button { padding: 14px 30px; font-size: 16px; }
+            .sidebar, .editor { padding: 30px; border-radius: 30px; }
+            .search-bar { padding: 16px 30px; font-size: 18px; border-radius: 35px; }
+            #note-input { min-height: 250px; padding: 20px; font-size: 18px; border-radius: 25px; }
+            .toolbar button { padding: 14px 30px; font-size: 16px; border-radius: 35px; }
+            .tags input { padding: 16px 30px; font-size: 17px; border-radius: 25px; }
+            .button-group button { padding: 16px 35px; font-size: 17px; border-radius: 40px; }
+            #notes-list li { padding: 20px; font-size: 17px; border-radius: 25px; gap: 25px; }
+            .note-actions button { padding: 12px 20px; font-size: 15px; border-radius: 30px; }
+            .notification { padding: 20px 40px; font-size: 18px; border-radius: 25px; }
+            footer { padding: 30px; font-size: 17px; margin-top: 40px; border-radius: 30px 30px 0 0; }
         }
     </style>
 </head>
@@ -683,201 +735,208 @@
     </footer>
 
     <script>
-        let notes = JSON.parse(localStorage.getItem("luffyNotes")) || [];
-        let currentLang = localStorage.getItem("luffyLang") || "ar";
-        let isDarkMode = localStorage.getItem("luffyDarkMode") === "true";
-        let editingIndex = null;
+        document.fonts.load('16px Poppins').then(() => {
+            let notes = JSON.parse(localStorage.getItem("luffyNotes")) || [];
+            let currentLang = localStorage.getItem("luffyLang") || "ar";
+            let isDarkMode = localStorage.getItem("luffyDarkMode") === "true";
+            let editingIndex = null;
 
-        document.addEventListener("DOMContentLoaded", () => {
-            if (isDarkMode) document.body.classList.add("dark");
-            document.body.setAttribute("lang", currentLang);
-            document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
-            displayNotes();
-            updateLanguage();
-            checkSaveButtonState();
-        });
-
-        function toggleDarkMode() {
-            document.body.classList.toggle("dark");
-            isDarkMode = document.body.classList.contains("dark");
-            localStorage.setItem("luffyDarkMode", isDarkMode);
-            updateUIForTheme();
-        }
-
-        function toggleLanguage() {
-            currentLang = currentLang === "ar" ? "en" : "ar";
-            localStorage.setItem("luffyLang", currentLang);
-            document.body.setAttribute("lang", currentLang);
-            document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
-            updateLanguage();
-        }
-
-        function updateLanguage() {
-            document.querySelectorAll(".lang-text").forEach(element => {
-                element.textContent = element.getAttribute(`data-${currentLang}`);
+            document.addEventListener("DOMContentLoaded", () => {
+                if (isDarkMode) document.body.classList.add("dark");
+                document.body.setAttribute("lang", currentLang);
+                document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
+                displayNotes();
+                updateLanguage();
+                checkSaveButtonState();
             });
-            const placeholders = document.querySelectorAll("[data-en-placeholder]");
-            placeholders.forEach(element => {
-                element.placeholder = currentLang === "ar" 
-                    ? "اكتب ملاحظتك هنا..." 
-                    : element.getAttribute("data-en-placeholder");
-            });
-            const saveBtn = document.querySelector(".save-btn .lang-text");
-            saveBtn.textContent = editingIndex !== null 
-                ? (currentLang === "ar" ? "تحديث" : "Update") 
-                : (currentLang === "ar" ? "حفظ" : "Save");
-        }
 
-        function updateUIForTheme() {
-            const isDark = document.body.classList.contains("dark");
-            document.querySelectorAll(".dynamic-theme").forEach(element => {
-                element.style.background = isDark 
-                    ? element.getAttribute("data-dark-bg") 
-                    : element.getAttribute("data-light-bg");
-                element.style.color = isDark 
-                    ? element.getAttribute("data-dark-color") 
-                    : element.getAttribute("data-light-color");
-            });
-        }
+            function toggleDarkMode() {
+                document.body.classList.toggle("dark");
+                isDarkMode = document.body.classList.contains("dark");
+                localStorage.setItem("luffyDarkMode", isDarkMode);
+                updateUIForTheme();
+            }
 
-        function displayNotes(filter = "") {
-            const notesList = document.getElementById("notes-list");
-            notesList.innerHTML = "";
-            const filteredNotes = notes.filter(note => 
-                note.content.toLowerCase().includes(filter.toLowerCase()) || 
-                note.tags.some(tag => tag.toLowerCase().includes(filter.toLowerCase()))
-            );
-            filteredNotes.forEach((note, index) => {
-                const li = document.createElement("li");
-                li.innerHTML = `
-                    <span style="color: ${note.color}">${truncateText(note.content, 30)} (${note.tags.join(", ")}) - ${note.createdAt}</span>
-                    <div class="note-actions">
-                        <button onclick="editNote(${index})"><i class="fas fa-edit"></i></button>
-                        <button onclick="deleteNote(${index})"><i class="fas fa-trash"></i></button>
-                    </div>
-                `;
-                li.onclick = (e) => {
-                    if (e.target.tagName !== "BUTTON" && e.target.tagName !== "I") loadNote(note);
+            function toggleLanguage() {
+                currentLang = currentLang === "ar" ? "en" : "ar";
+                localStorage.setItem("luffyLang", currentLang);
+                document.body.setAttribute("lang", currentLang);
+                document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
+                updateLanguage();
+            }
+
+            function updateLanguage() {
+                document.querySelectorAll(".lang-text").forEach(element => {
+                    element.textContent = element.getAttribute(`data-${currentLang}`);
+                });
+                const placeholders = document.querySelectorAll("[data-en-placeholder]");
+                placeholders.forEach(element => {
+                    element.placeholder = currentLang === "ar" 
+                        ? "اكتب ملاحظتك هنا..." 
+                        : element.getAttribute("data-en-placeholder");
+                });
+                const saveBtn = document.querySelector(".save-btn .lang-text");
+                saveBtn.textContent = editingIndex !== null 
+                    ? (currentLang === "ar" ? "تحديث" : "Update") 
+                    : (currentLang === "ar" ? "حفظ" : "Save");
+            }
+
+            function updateUIForTheme() {
+                const isDark = document.body.classList.contains("dark");
+                document.querySelectorAll(".dynamic-theme").forEach(element => {
+                    element.style.background = isDark 
+                        ? element.getAttribute("data-dark-bg") 
+                        : element.getAttribute("data-light-bg");
+                    element.style.color = isDark 
+                        ? element.getAttribute("data-dark-color") 
+                        : element.getAttribute("data-light-color");
+                    element.style.boxShadow = isDark 
+                        ? `0 3px 12px ${var(--shadow-dark)}` 
+                        : `0 3px 12px ${var(--shadow-light)}`;
+                });
+            }
+
+            function displayNotes(filter = "") {
+                const notesList = document.getElementById("notes-list");
+                notesList.innerHTML = "";
+                const filteredNotes = notes.filter(note => 
+                    note.content.toLowerCase().includes(filter.toLowerCase()) || 
+                    note.tags.some(tag => tag.toLowerCase().includes(filter.toLowerCase()))
+                );
+                filteredNotes.forEach((note, index) => {
+                    const li = document.createElement("li");
+                    li.innerHTML = `
+                        <span style="color: ${note.color}">${truncateText(note.content, 30)} (${note.tags.join(", ")}) - ${note.createdAt}</span>
+                        <div class="note-actions">
+                            <button onclick="editNote(${index})" class="edit-btn"><i class="fas fa-edit"></i></button>
+                            <button onclick="deleteNote(${index})" class="delete-btn"><i class="fas fa-trash"></i></button>
+                        </div>
+                    `;
+                    li.onclick = (e) => {
+                        if (e.target.tagName !== "BUTTON" && e.target.tagName !== "I") loadNote(note);
+                    };
+                    notesList.appendChild(li);
+                });
+            }
+
+            function truncateText(text, maxLength) {
+                return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
+            }
+
+            function saveNote() {
+                const content = document.getElementById("note-input").value.trim();
+                const tags = document.getElementById("tags-input").value.split(",").map(tag => tag.trim()).filter(tag => tag);
+                const color = document.getElementById("note-input").style.color || "#1f2937";
+
+                if (!content) {
+                    showNotification(currentLang === "ar" ? "يرجى كتابة ملاحظة" : "Please write a note", "error");
+                    return;
+                }
+
+                const note = { 
+                    content, 
+                    tags, 
+                    color, 
+                    createdAt: editingIndex !== null && notes[editingIndex] ? notes[editingIndex].createdAt : new Date().toLocaleString(currentLang === "ar" ? "ar" : "en"),
+                    updatedAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en")
                 };
-                notesList.appendChild(li);
-            });
-        }
 
-        function truncateText(text, maxLength) {
-            return text.length > maxLength ? text.slice(0, maxLength) + "..." : text;
-        }
+                if (editingIndex !== null) {
+                    notes[editingIndex] = note;
+                    editingIndex = null;
+                } else {
+                    notes.push(note);
+                }
 
-        function saveNote() {
-            const content = document.getElementById("note-input").value.trim();
-            const tags = document.getElementById("tags-input").value.split(",").map(tag => tag.trim()).filter(tag => tag);
-            const color = document.getElementById("note-input").style.color || "#1f2937";
-
-            if (!content) {
-                showNotification(currentLang === "ar" ? "يرجى كتابة ملاحظة" : "Please write a note", "error");
-                return;
-            }
-
-            const note = { 
-                content, 
-                tags, 
-                color, 
-                createdAt: editingIndex !== null && notes[editingIndex] ? notes[editingIndex].createdAt : new Date().toLocaleString(currentLang === "ar" ? "ar" : "en"),
-                updatedAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en")
-            };
-
-            if (editingIndex !== null) {
-                notes[editingIndex] = note;
-                editingIndex = null;
-            } else {
-                notes.push(note);
-            }
-
-            localStorage.setItem("luffyNotes", JSON.stringify(notes));
-            clearNote();
-            displayNotes();
-            showNotification(currentLang === "ar" ? (editingIndex !== null ? "تم التحديث!" : "تم الحفظ بنجاح!") : (editingIndex !== null ? "Updated!" : "Saved successfully!"), "success");
-        }
-
-        function editNote(index) {
-            const note = notes[index];
-            document.getElementById("note-input").value = note.content;
-            document.getElementById("note-input").style.color = note.color;
-            document.getElementById("tags-input").value = note.tags.join(", ");
-            editingIndex = index;
-            updateLanguage();
-            checkSaveButtonState();
-        }
-
-        function deleteNote(index) {
-            notes.splice(index, 1);
-            localStorage.setItem("luffyNotes", JSON.stringify(notes));
-            displayNotes();
-            showNotification(currentLang === "ar" ? "تم الحذف!" : "Deleted!", "success");
-            if (editingIndex === index) {
+                localStorage.setItem("luffyNotes", JSON.stringify(notes));
                 clearNote();
-                editingIndex = null;
+                displayNotes();
+                showNotification(currentLang === "ar" ? (editingIndex !== null ? "تم التحديث!" : "تم الحفظ بنجاح!") : (editingIndex !== null ? "Updated!" : "Saved successfully!"), "success");
             }
-        }
 
-        function clearNote() {
-            document.getElementById("note-input").value = "";
-            document.getElementById("tags-input").value = "";
-            document.getElementById("note-input").style.color = "#1f2937";
-            editingIndex = null;
-            updateLanguage();
-            checkSaveButtonState();
-        }
+            function editNote(index) {
+                const note = notes[index];
+                document.getElementById("note-input").value = note.content;
+                document.getElementById("note-input").style.color = note.color;
+                document.getElementById("tags-input").value = note.tags.join(", ");
+                editingIndex = index;
+                updateLanguage();
+                checkSaveButtonState();
+            }
 
-        function searchNotes() {
-            const filter = document.getElementById("search-input").value.trim();
-            displayNotes(filter);
-        }
+            function deleteNote(index) {
+                notes.splice(index, 1);
+                localStorage.setItem("luffyNotes", JSON.stringify(notes));
+                displayNotes();
+                showNotification(currentLang === "ar" ? "تم الحذف!" : "Deleted!", "success");
+                if (editingIndex === index) {
+                    clearNote();
+                    editingIndex = null;
+                }
+            }
 
-        function changeColor(color) {
-            document.getElementById("note-input").style.color = color;
-        }
+            function clearNote() {
+                document.getElementById("note-input").value = "";
+                document.getElementById("tags-input").value = "";
+                document.getElementById("note-input").style.color = "#1f2937";
+                editingIndex = null;
+                updateLanguage();
+                checkSaveButtonState();
+            }
 
-        function suggestTags() {
-            const content = document.getElementById("note-input").value.toLowerCase();
-            const tagsInput = document.getElementById("tags-input");
-            let suggestedTags = [];
-            if (content.includes("work") || content.includes("عمل")) suggestedTags.push("work");
-            if (content.includes("personal") || content.includes("شخصي")) suggestedTags.push("personal");
-            if (content.includes("idea") || content.includes("فكرة")) suggestedTags.push("idea");
-            if (content.includes("meeting") || content.includes("اجتماع")) suggestedTags.push("meeting");
-            if (content.includes("task") || content.includes("مهمة")) suggestedTags.push("task");
-            if (content.includes("project") || content.includes("مشروع")) suggestedTags.push("project");
-            tagsInput.value = suggestedTags.join(", ");
-            showNotification(currentLang === "ar" ? "تم اقتراح الوسوم!" : "Tags suggested!", "success");
-        }
+            function searchNotes() {
+                const filter = document.getElementById("search-input").value.trim();
+                displayNotes(filter);
+            }
 
-        function checkSaveButtonState() {
-            const saveBtn = document.querySelector(".save-btn");
-            const isEmpty = !document.getElementById("note-input").value.trim();
-            saveBtn.disabled = isEmpty;
-            saveBtn.style.opacity = isEmpty ? "0.6" : "1";
-            saveBtn.style.cursor = isEmpty ? "not-allowed" : "pointer";
-        }
+            function changeColor(color) {
+                document.getElementById("note-input").style.color = color;
+            }
 
-        document.getElementById("note-input").addEventListener("input", checkSaveButtonState);
+            function suggestTags() {
+                const content = document.getElementById("note-input").value.toLowerCase();
+                const tagsInput = document.getElementById("tags-input");
+                let suggestedTags = [];
+                if (content.includes("work") || content.includes("عمل")) suggestedTags.push("work");
+                if (content.includes("personal") || content.includes("شخصي")) suggestedTags.push("personal");
+                if (content.includes("idea") || content.includes("فكرة")) suggestedTags.push("idea");
+                if (content.includes("meeting") || content.includes("اجتماع")) suggestedTags.push("meeting");
+                if (content.includes("task") || content.includes("مهمة")) suggestedTags.push("task");
+                if (content.includes("project") || content.includes("مشروع")) suggestedTags.push("project");
+                if (content.includes("urgent") || content.includes("عاجل")) suggestedTags.push("urgent");
+                tagsInput.value = suggestedTags.join(", ");
+                showNotification(currentLang === "ar" ? "تم اقتراح الوسوم الذكية!" : "Smart tags suggested!", "success");
+            }
 
-        function showNotification(message, type) {
-            const existing = document.querySelector(".notification");
-            if (existing) existing.remove();
-            const noti = document.createElement("div");
-            noti.className = `notification ${type}`;
-            noti.textContent = message;
-            document.body.appendChild(noti);
-            setTimeout(() => {
-                noti.style.opacity = "1";
-                noti.style.transform = "translateX(-50%) translateY(10px)";
-            }, 10);
-            setTimeout(() => {
-                noti.style.opacity = "0";
-                noti.style.transform = "translateX(-50%) translateY(0)";
-                setTimeout(() => noti.remove(), 500);
-            }, 3000);
-        }
+            function checkSaveButtonState() {
+                const saveBtn = document.querySelector(".save-btn");
+                const isEmpty = !document.getElementById("note-input").value.trim();
+                saveBtn.disabled = isEmpty;
+                saveBtn.style.opacity = isEmpty ? "0.6" : "1";
+                saveBtn.style.cursor = isEmpty ? "not-allowed" : "pointer";
+                saveBtn.style.transform = isEmpty ? "scale(0.98)" : "scale(1)";
+            }
+
+            document.getElementById("note-input").addEventListener("input", checkSaveButtonState);
+
+            function showNotification(message, type) {
+                const existing = document.querySelector(".notification");
+                if (existing) existing.remove();
+                const noti = document.createElement("div");
+                noti.className = `notification ${type}`;
+                noti.textContent = message;
+                document.body.appendChild(noti);
+                setTimeout(() => {
+                    noti.style.opacity = "1";
+                    noti.style.transform = "translateX(-50%) translateY(15px)";
+                }, 10);
+                setTimeout(() => {
+                    noti.style.opacity = "0";
+                    noti.style.transform = "translateX(-50%) translateY(0)";
+                    setTimeout(() => noti.remove(), 600);
+                }, 3500);
+            }
+        });
     </script>
 </body>
 </html>
