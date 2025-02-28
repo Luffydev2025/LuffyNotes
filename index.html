@@ -16,12 +16,11 @@
         body {
             background: linear-gradient(135deg, #e0e7ff 0%, #dbeafe 100%);
             color: #1e293b;
-            transition: all 0.4s ease;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             overflow-x: hidden;
-            position: relative;
+            transition: background 0.4s ease;
         }
 
         body.dark {
@@ -47,11 +46,11 @@
             top: 0;
             z-index: 1000;
             backdrop-filter: blur(10px);
+            transition: background 0.4s ease;
         }
 
         body.dark header {
             background: rgba(30, 41, 59, 0.95);
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
         }
 
         .logo {
@@ -146,7 +145,6 @@
 
         body.dark .sidebar {
             background: rgba(30, 41, 59, 0.98);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
         }
 
         .search-bar {
@@ -182,7 +180,6 @@
 
         body.dark .editor {
             background: rgba(30, 41, 59, 0.98);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.3);
         }
 
         #note-input {
@@ -361,17 +358,17 @@
             background: rgba(255, 255, 255, 0.98);
             border-radius: 20px 20px 0 0;
             box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+            transition: background 0.4s ease;
         }
 
         body.dark footer {
             color: #94a3b8;
             background: rgba(30, 41, 59, 0.98);
-            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
         }
 
         @media (min-width: 768px) {
-            .sidebar { flex: 1 1 300px; max-height: 70vh; }
-            .editor { flex: 2 1 400px; }
+            .sidebar { flex: 1 1 320px; max-height: 70vh; }
+            .editor { flex: 2 1 450px; }
         }
     </style>
 </head>
@@ -400,9 +397,9 @@
 
         <div class="editor">
             <div class="toolbar">
-                <button onclick="changeColor('red')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أحمر" data-en="Red">أحمر</span></button>
-                <button onclick="changeColor('blue')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أزرق" data-en="Blue">أزرق</span></button>
-                <button onclick="changeColor('black')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أسود" data-en="Black">أسود</span></button>
+                <button onclick="changeColor('#ef4444')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أحمر" data-en="Red">أحمر</span></button>
+                <button onclick="changeColor('#3b82f6')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أزرق" data-en="Blue">أزرق</span></button>
+                <button onclick="changeColor('#1e293b')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أسود" data-en="Black">أسود</span></button>
                 <button onclick="suggestTags()" title="Smart Tags Suggestion"><i class="fas fa-brain"></i> AI Tags</button>
             </div>
             <textarea id="note-input" placeholder="اكتب ملاحظتك هنا..." data-en-placeholder="Write your note here..."></textarea>
@@ -422,23 +419,30 @@
 
     <script>
         let notes = JSON.parse(localStorage.getItem("luffyNotes")) || [];
-        let currentLang = "ar";
+        let currentLang = localStorage.getItem("luffyLang") || "ar";
+        let isDarkMode = localStorage.getItem("luffyDarkMode") === "true";
 
         document.addEventListener("DOMContentLoaded", () => {
+            if (isDarkMode) document.body.classList.add("dark");
+            document.body.setAttribute("lang", currentLang);
+            document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
             displayNotes();
             updateLanguage();
         });
 
         function toggleDarkMode() {
             document.body.classList.toggle("dark");
+            isDarkMode = document.body.classList.contains("dark");
+            localStorage.setItem("luffyDarkMode", isDarkMode);
             const button = document.querySelector(".toggle-mode .lang-text");
-            button.textContent = document.body.classList.contains("dark")
+            button.textContent = isDarkMode
                 ? button.getAttribute(currentLang === "ar" ? "data-en" : "data-ar")
                 : button.getAttribute(currentLang === "ar" ? "data-ar" : "data-en");
         }
 
         function toggleLanguage() {
             currentLang = currentLang === "ar" ? "en" : "ar";
+            localStorage.setItem("luffyLang", currentLang);
             document.body.setAttribute("lang", currentLang);
             document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
             updateLanguage();
@@ -450,10 +454,10 @@
             });
             const placeholders = document.querySelectorAll("[data-en-placeholder]");
             placeholders.forEach(element => {
-                element.placeholder = currentLang === "ar" ? "اكتب ملاحظتك هنا..." : element.getAttribute("data-en-placeholder");
+                element.placeholder = currentLang === "ar" 
+                    ? element.getAttribute("placeholder") 
+                    : element.getAttribute("data-en-placeholder");
             });
-            const langButton = document.querySelector(".toggle-lang .lang-text");
-            langButton.textContent = currentLang === "ar" ? "English" : "العربية";
         }
 
         function displayNotes(filter = "") {
@@ -481,18 +485,24 @@
         function saveNote() {
             const content = document.getElementById("note-input").value.trim();
             const tags = document.getElementById("tags-input").value.split(",").map(tag => tag.trim()).filter(tag => tag);
-            const color = document.getElementById("note-input").style.color || "black";
+            const color = document.getElementById("note-input").style.color || "#1e293b";
             
-            if (content) {
-                const note = { content, tags, color, createdAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en") };
-                notes.push(note);
-                localStorage.setItem("luffyNotes", JSON.stringify(notes));
-                clearNote();
-                displayNotes();
-                showNotification(currentLang === "ar" ? "تم الحفظ بنجاح!" : "Saved successfully!", "success");
-            } else {
+            if (!content) {
                 showNotification(currentLang === "ar" ? "يرجى كتابة ملاحظة" : "Please write a note", "error");
+                return;
             }
+
+            const note = { 
+                content, 
+                tags, 
+                color, 
+                createdAt: new Date().toLocaleString(currentLang === "ar" ? "ar" : "en") 
+            };
+            notes.push(note);
+            localStorage.setItem("luffyNotes", JSON.stringify(notes));
+            clearNote();
+            displayNotes();
+            showNotification(currentLang === "ar" ? "تم الحفظ بنجاح!" : "Saved successfully!", "success");
         }
 
         function loadNote(note) {
@@ -511,7 +521,7 @@
         function clearNote() {
             document.getElementById("note-input").value = "";
             document.getElementById("tags-input").value = "";
-            document.getElementById("note-input").style.color = "black";
+            document.getElementById("note-input").style.color = "#1e293b";
         }
 
         function searchNotes() {
@@ -530,6 +540,7 @@
             if (content.includes("work") || content.includes("عمل")) suggestedTags.push("work");
             if (content.includes("personal") || content.includes("شخصي")) suggestedTags.push("personal");
             if (content.includes("idea") || content.includes("فكرة")) suggestedTags.push("idea");
+            if (content.includes("meeting") || content.includes("اجتماع")) suggestedTags.push("meeting");
             tagsInput.value = suggestedTags.join(", ");
             showNotification(currentLang === "ar" ? "تم اقتراح الوسوم!" : "Tags suggested!", "success");
         }
@@ -541,9 +552,13 @@
             noti.className = `notification ${type}`;
             noti.textContent = message;
             document.body.appendChild(noti);
-            setTimeout(() => noti.style.opacity = "1", 10);
+            setTimeout(() => {
+                noti.style.opacity = "1";
+                noti.style.transform = "translateX(-50%) translateY(10px)";
+            }, 10);
             setTimeout(() => {
                 noti.style.opacity = "0";
+                noti.style.transform = "translateX(-50%) translateY(0)";
                 setTimeout(() => noti.remove(), 500);
             }, 3000);
         }
