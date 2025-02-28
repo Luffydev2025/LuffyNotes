@@ -34,12 +34,14 @@
 
         header {
             background: rgba(255, 255, 255, 0.9);
-            padding: 20px 30px;
-            border-radius: 0 0 25px 25px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            padding: 15px 20px;
+            border-radius: 0 0 20px 20px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
             display: flex;
             justify-content: space-between;
             align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
             position: sticky;
             top: 0;
             z-index: 1000;
@@ -54,7 +56,7 @@
         .logo {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
             transition: transform 0.3s ease;
         }
 
@@ -63,17 +65,17 @@
         }
 
         .logo-circle {
-            width: 50px;
-            height: 50px;
+            width: 40px;
+            height: 40px;
             background: linear-gradient(135deg, #4f46e5, #22c55e);
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
             color: #fff;
-            font-size: 28px;
+            font-size: 24px;
             font-weight: bold;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
             position: relative;
             overflow: hidden;
         }
@@ -93,12 +95,12 @@
         }
 
         .site-title {
-            font-size: 32px;
+            font-size: 24px;
             font-weight: 700;
             background: linear-gradient(90deg, #4f46e5, #22c55e);
             -webkit-background-clip: text;
             color: transparent;
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
         }
 
         body.dark .site-title {
@@ -107,24 +109,24 @@
 
         .header-actions {
             display: flex;
-            gap: 20px;
+            gap: 10px;
         }
 
         .toggle-mode, .toggle-lang {
-            padding: 12px 25px;
+            padding: 10px 18px;
             background: linear-gradient(45deg, #4f46e5, #7dd3fc);
             color: #fff;
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             cursor: pointer;
-            font-size: 15px;
+            font-size: 14px;
             transition: all 0.3s ease;
-            box-shadow: 0 3px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
 
         .toggle-mode:hover, .toggle-lang:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
         }
 
         body.dark .toggle-mode, body.dark .toggle-lang {
@@ -134,10 +136,11 @@
         .container {
             display: flex;
             flex-wrap: wrap;
-            gap: 25px;
+            gap: 15px;
             max-width: 1200px;
-            margin: 40px auto;
+            margin: 20px auto;
             flex-grow: 1;
+            padding: 0 10px;
             animation: slideUp 0.6s ease-out;
         }
 
@@ -146,31 +149,38 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .sidebar {
-            flex: 1 1 100%;
+        .sidebar, .editor {
             background: rgba(255, 255, 255, 0.98);
-            padding: 25px;
-            border-radius: 25px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            max-height: 65vh;
-            overflow-y: auto;
+            border-radius: 20px;
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            padding: 20px;
             transition: all 0.3s ease;
         }
 
-        body.dark .sidebar {
+        body.dark .sidebar, body.dark .editor {
             background: rgba(30, 41, 59, 0.98);
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+        }
+
+        .sidebar {
+            flex: 1 1 100%;
+            max-height: 50vh;
+            overflow-y: auto;
+        }
+
+        .editor {
+            flex: 1 1 100%;
         }
 
         .search-bar {
             width: 100%;
-            padding: 14px 25px;
+            padding: 12px 20px;
             border: none;
-            border-radius: 30px;
+            border-radius: 25px;
             background: #f1f5f9;
-            margin-bottom: 25px;
-            font-size: 16px;
-            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.05);
+            margin-bottom: 20px;
+            font-size: 15px;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
             transition: box-shadow 0.3s ease;
         }
 
@@ -184,30 +194,17 @@
             color: #e2e8f0;
         }
 
-        .editor {
-            flex: 1 1 100%;
-            background: rgba(255, 255, 255, 0.98);
-            padding: 25px;
-            border-radius: 25px;
-            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
-            transition: all 0.3s ease;
-        }
-
-        body.dark .editor {
-            background: rgba(30, 41, 59, 0.98);
-        }
-
         #note-input {
             width: 100%;
-            min-height: 220px;
-            padding: 18px;
+            min-height: 180px;
+            padding: 15px;
             border: none;
             border-radius: 15px;
             resize: vertical;
-            font-size: 17px;
+            font-size: 16px;
             background: #fff;
             color: #1e293b;
-            box-shadow: inset 0 4px 10px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
 
@@ -222,18 +219,18 @@
         }
 
         .toolbar {
-            margin: 20px 0;
+            margin: 15px 0;
             display: flex;
-            gap: 15px;
+            gap: 12px;
             flex-wrap: wrap;
         }
 
         .toolbar button {
-            padding: 12px 25px;
+            padding: 10px 20px;
             background: #f1f5f9;
             color: #1e293b;
-            border-radius: 30px;
-            font-size: 15px;
+            border-radius: 25px;
+            font-size: 14px;
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
         }
@@ -254,17 +251,17 @@
         }
 
         .tags {
-            margin-top: 20px;
+            margin-top: 15px;
         }
 
         .tags input {
             width: 100%;
-            padding: 14px 25px;
+            padding: 12px 20px;
             border: none;
             border-radius: 15px;
-            font-size: 16px;
+            font-size: 15px;
             background: #f1f5f9;
-            box-shadow: inset 0 3px 6px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
             transition: all 0.3s ease;
         }
 
@@ -279,21 +276,21 @@
         }
 
         .button-group {
-            margin-top: 25px;
+            margin-top: 20px;
             display: flex;
-            gap: 20px;
+            gap: 15px;
             flex-wrap: wrap;
         }
 
         button {
-            padding: 14px 30px;
+            padding: 12px 25px;
             background: linear-gradient(45deg, #22c55e, #4ade80);
             color: #fff;
             border: none;
-            border-radius: 35px;
+            border-radius: 30px;
             cursor: pointer;
             flex-grow: 1;
-            font-size: 16px;
+            font-size: 15px;
             transition: all 0.3s ease;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
         }
@@ -312,16 +309,16 @@
         }
 
         #notes-list li {
-            padding: 18px;
+            padding: 15px;
             background: #f8fafc;
             margin-bottom: 15px;
             border-radius: 15px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 15px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            gap: 20px;
+            gap: 15px;
             border-left: 5px solid #4f46e5;
             transition: all 0.3s ease;
         }
@@ -385,12 +382,12 @@
 
         footer {
             text-align: center;
-            padding: 25px;
-            font-size: 16px;
+            padding: 20px;
+            font-size: 15px;
             color: #64748b;
-            margin-top: 40px;
+            margin-top: 30px;
             background: rgba(255, 255, 255, 0.98);
-            border-radius: 25px 25px 0 0;
+            border-radius: 20px 20px 0 0;
             box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.1);
             transition: background 0.5s ease;
         }
@@ -398,6 +395,91 @@
         body.dark footer {
             color: #94a3b8;
             background: rgba(30, 41, 59, 0.98);
+        }
+
+        @media (max-width: 767px) {
+            header {
+                padding: 15px 10px;
+            }
+
+            .logo-circle {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+
+            .site-title {
+                font-size: 20px;
+            }
+
+            .header-actions button {
+                padding: 8px 15px;
+                font-size: 13px;
+                border-radius: 20px;
+            }
+
+            .container {
+                margin: 15px auto;
+                gap: 10px;
+                padding: 0 5px;
+            }
+
+            .sidebar, .editor {
+                padding: 15px;
+                border-radius: 15px;
+                max-height: 40vh;
+            }
+
+            .search-bar {
+                padding: 10px 15px;
+                font-size: 14px;
+                border-radius: 20px;
+            }
+
+            #note-input {
+                min-height: 150px;
+                padding: 12px;
+                font-size: 15px;
+                border-radius: 12px;
+            }
+
+            .toolbar button {
+                padding: 8px 15px;
+                font-size: 13px;
+                border-radius: 20px;
+            }
+
+            .tags input {
+                padding: 10px 15px;
+                font-size: 14px;
+                border-radius: 12px;
+            }
+
+            .button-group button {
+                padding: 10px 20px;
+                font-size: 14px;
+                border-radius: 25px;
+            }
+
+            #notes-list li {
+                padding: 12px;
+                font-size: 14px;
+                border-radius: 12px;
+                gap: 10px;
+            }
+
+            .note-actions button {
+                padding: 6px 12px;
+                font-size: 12px;
+                border-radius: 15px;
+            }
+
+            footer {
+                padding: 15px;
+                font-size: 14px;
+                margin-top: 20px;
+                border-radius: 15px 15px 0 0;
+            }
         }
 
         @media (min-width: 768px) {
@@ -452,7 +534,6 @@
     </footer>
 
     <script>
-        // تهيئة الحالة من التخزين المحلي
         let notes = JSON.parse(localStorage.getItem("luffyNotes")) || [];
         let currentLang = localStorage.getItem("luffyLang") || "ar";
         let isDarkMode = localStorage.getItem("luffyDarkMode") === "true";
@@ -486,10 +567,12 @@
             document.querySelectorAll(".lang-text").forEach(element => {
                 element.textContent = element.getAttribute(`data-${currentLang}`);
             });
-            const noteInput = document.getElementById("note-input");
-            const tagsInput = document.getElementById("tags-input");
-            noteInput.placeholder = currentLang === "ar" ? "اكتب ملاحظتك هنا..." : "Write your note here...";
-            tagsInput.placeholder = currentLang === "ar" ? "أضف وسوم (مفصولة بفواصل)" : "Add tags (comma-separated)";
+            const placeholders = document.querySelectorAll("[data-en-placeholder]");
+            placeholders.forEach(element => {
+                element.placeholder = currentLang === "ar" 
+                    ? "اكتب ملاحظتك هنا..." 
+                    : element.getAttribute("data-en-placeholder");
+            });
             const saveBtn = document.querySelector(".save-btn .lang-text");
             saveBtn.textContent = editingIndex !== null 
                 ? (currentLang === "ar" ? "تحديث" : "Update") 
@@ -499,7 +582,10 @@
         function displayNotes(filter = "") {
             const notesList = document.getElementById("notes-list");
             notesList.innerHTML = "";
-            const filteredNotes = filterNotes(filter);
+            const filteredNotes = notes.filter(note => 
+                note.content.toLowerCase().includes(filter.toLowerCase()) || 
+                note.tags.some(tag => tag.toLowerCase().includes(filter.toLowerCase()))
+            );
             filteredNotes.forEach((note, index) => {
                 const li = document.createElement("li");
                 li.innerHTML = `
@@ -509,15 +595,11 @@
                         <button onclick="deleteNote(${index})"><i class="fas fa-trash"></i></button>
                     </div>
                 `;
+                li.onclick = (e) => {
+                    if (e.target.tagName !== "BUTTON" && e.target.tagName !== "I") loadNote(note);
+                };
                 notesList.appendChild(li);
             });
-        }
-
-        function filterNotes(filter) {
-            return notes.filter(note => 
-                note.content.toLowerCase().includes(filter.toLowerCase()) || 
-                note.tags.some(tag => tag.toLowerCase().includes(filter.toLowerCase()))
-            );
         }
 
         function truncateText(text, maxLength) {
@@ -609,9 +691,10 @@
 
         function checkSaveButtonState() {
             const saveBtn = document.querySelector(".save-btn");
-            saveBtn.disabled = !document.getElementById("note-input").value.trim();
-            saveBtn.style.opacity = saveBtn.disabled ? "0.6" : "1";
-            saveBtn.style.cursor = saveBtn.disabled ? "not-allowed" : "pointer";
+            const isEmpty = !document.getElementById("note-input").value.trim();
+            saveBtn.disabled = isEmpty;
+            saveBtn.style.opacity = isEmpty ? "0.6" : "1";
+            saveBtn.style.cursor = isEmpty ? "not-allowed" : "pointer";
         }
 
         document.getElementById("note-input").addEventListener("input", checkSaveButtonState);
