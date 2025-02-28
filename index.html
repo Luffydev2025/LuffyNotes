@@ -2,7 +2,7 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>LuffyNotes</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
@@ -14,8 +14,8 @@
         }
 
         body {
-            background: linear-gradient(145deg, #f0f4ff 0%, #e0e7ff 100%);
-            color: #1e293b;
+            background: linear-gradient(145deg, #f3f4f6 0%, #e5e7eb 100%);
+            color: #1f2937;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
@@ -24,8 +24,8 @@
         }
 
         body.dark {
-            background: linear-gradient(145deg, #1e293b 0%, #2d3e50 100%);
-            color: #e2e8f0;
+            background: linear-gradient(145deg, #111827 0%, #1f2937 100%);
+            color: #f3f4f6;
         }
 
         body[lang="en"] {
@@ -35,8 +35,8 @@
         header {
             background: rgba(255, 255, 255, 0.9);
             padding: 15px 20px;
-            border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            border-radius: 0 0 25px 25px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -50,7 +50,7 @@
         }
 
         body.dark header {
-            background: rgba(30, 41, 59, 0.9);
+            background: rgba(17, 24, 39, 0.9);
         }
 
         .logo {
@@ -67,7 +67,7 @@
         .logo-circle {
             width: 40px;
             height: 40px;
-            background: linear-gradient(135deg, #4f46e5, #22c55e);
+            background: linear-gradient(135deg, #3b82f6, #10b981);
             border-radius: 50%;
             display: flex;
             align-items: center;
@@ -75,7 +75,7 @@
             color: #fff;
             font-size: 24px;
             font-weight: bold;
-            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
             position: relative;
             overflow: hidden;
         }
@@ -97,7 +97,7 @@
         .site-title {
             font-size: 24px;
             font-weight: 700;
-            background: linear-gradient(90deg, #4f46e5, #22c55e);
+            background: linear-gradient(90deg, #3b82f6, #10b981);
             -webkit-background-clip: text;
             color: transparent;
             letter-spacing: 0.5px;
@@ -114,19 +114,19 @@
 
         .toggle-mode, .toggle-lang {
             padding: 10px 18px;
-            background: linear-gradient(45deg, #4f46e5, #7dd3fc);
+            background: linear-gradient(45deg, #3b82f6, #60a5fa);
             color: #fff;
             border: none;
             border-radius: 25px;
             cursor: pointer;
             font-size: 14px;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .toggle-mode:hover, .toggle-lang:hover {
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         body.dark .toggle-mode, body.dark .toggle-lang {
@@ -136,7 +136,7 @@
         .container {
             display: flex;
             flex-wrap: wrap;
-            gap: 15px;
+            gap: 20px;
             max-width: 1200px;
             margin: 20px auto;
             flex-grow: 1;
@@ -150,16 +150,16 @@
         }
 
         .sidebar, .editor {
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px;
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.05);
             padding: 20px;
             transition: all 0.3s ease;
         }
 
         body.dark .sidebar, body.dark .editor {
-            background: rgba(30, 41, 59, 0.98);
-            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.25);
+            background: rgba(17, 24, 39, 0.95);
+            box-shadow: 0 6px 25px rgba(0, 0, 0, 0.1);
         }
 
         .sidebar {
@@ -177,21 +177,21 @@
             padding: 12px 20px;
             border: none;
             border-radius: 25px;
-            background: #f1f5f9;
+            background: #f3f4f6;
             margin-bottom: 20px;
             font-size: 15px;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
             transition: box-shadow 0.3s ease;
         }
 
         .search-bar:focus {
             outline: none;
-            box-shadow: 0 0 12px rgba(79, 70, 229, 0.5);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
         }
 
         body.dark .search-bar {
-            background: #475569;
-            color: #e2e8f0;
+            background: #374151;
+            color: #f3f4f6;
         }
 
         #note-input {
@@ -203,19 +203,19 @@
             resize: vertical;
             font-size: 16px;
             background: #fff;
-            color: #1e293b;
-            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.05);
+            color: #1f2937;
+            box-shadow: inset 0 3px 8px rgba(0, 0, 0, 0.03);
             transition: all 0.3s ease;
         }
 
         #note-input:focus {
             outline: none;
-            box-shadow: 0 0 15px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 0 15px rgba(59, 130, 246, 0.2);
         }
 
         body.dark #note-input {
-            background: #475569;
-            color: #e2e8f0;
+            background: #374151;
+            color: #f3f4f6;
         }
 
         .toolbar {
@@ -227,27 +227,27 @@
 
         .toolbar button {
             padding: 10px 20px;
-            background: #f1f5f9;
-            color: #1e293b;
+            background: #f3f4f6;
+            color: #1f2937;
             border-radius: 25px;
             font-size: 14px;
             transition: all 0.3s ease;
-            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
         }
 
         .toolbar button:hover {
-            background: #e2e8f0;
+            background: #e5e7eb;
             transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
         }
 
         body.dark .toolbar button {
-            background: #64748b;
-            color: #e2e8f0;
+            background: #4a5568;
+            color: #f3f4f6;
         }
 
         body.dark .toolbar button:hover {
-            background: #94a3b8;
+            background: #6b7280;
         }
 
         .tags {
@@ -260,19 +260,19 @@
             border: none;
             border-radius: 15px;
             font-size: 15px;
-            background: #f1f5f9;
-            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+            background: #f3f4f6;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.03);
             transition: all 0.3s ease;
         }
 
         .tags input:focus {
             outline: none;
-            box-shadow: 0 0 12px rgba(79, 70, 229, 0.3);
+            box-shadow: 0 0 12px rgba(59, 130, 246, 0.2);
         }
 
         body.dark .tags input {
-            background: #475569;
-            color: #e2e8f0;
+            background: #374151;
+            color: #f3f4f6;
         }
 
         .button-group {
@@ -284,7 +284,7 @@
 
         button {
             padding: 12px 25px;
-            background: linear-gradient(45deg, #22c55e, #4ade80);
+            background: linear-gradient(45deg, #10b981, #34d399);
             color: #fff;
             border: none;
             border-radius: 30px;
@@ -292,16 +292,16 @@
             flex-grow: 1;
             font-size: 15px;
             transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
         }
 
         button:hover {
             transform: translateY(-3px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
         }
 
         button.delete {
-            background: linear-gradient(45deg, #f43f5e, #fb7185);
+            background: linear-gradient(45deg, #ef4444, #f87171);
         }
 
         #notes-list {
@@ -310,7 +310,7 @@
 
         #notes-list li {
             padding: 15px;
-            background: #f8fafc;
+            background: #f9fafb;
             margin-bottom: 15px;
             border-radius: 15px;
             cursor: pointer;
@@ -319,23 +319,23 @@
             justify-content: space-between;
             align-items: center;
             gap: 15px;
-            border-left: 5px solid #4f46e5;
+            border-left: 5px solid #3b82f6;
             transition: all 0.3s ease;
         }
 
         #notes-list li:hover {
-            background: #e2e8f0;
+            background: #e5e7eb;
             transform: translateX(5px);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
         }
 
         body.dark #notes-list li {
-            background: #475569;
+            background: #374151;
             border-left-color: #f43f5e;
         }
 
         body.dark #notes-list li:hover {
-            background: #64748b;
+            background: #4a5568;
         }
 
         .note-actions {
@@ -353,11 +353,11 @@
         }
 
         .note-actions button:hover {
-            background: rgba(0, 0, 0, 0.1);
+            background: rgba(0, 0, 0, 0.05);
         }
 
         body.dark .note-actions button:hover {
-            background: rgba(255, 255, 255, 0.1);
+            background: rgba(255, 255, 255, 0.05);
         }
 
         .notification {
@@ -372,54 +372,56 @@
             z-index: 1000;
             opacity: 0;
             transition: opacity 0.5s, transform 0.3s;
-            background: linear-gradient(45deg, #22c55e, #4ade80);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+            background: linear-gradient(45deg, #10b981, #34d399);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
         }
 
         .notification.error {
-            background: linear-gradient(45deg, #f43f5e, #fb7185);
+            background: linear-gradient(45deg, #ef4444, #f87171);
         }
 
         footer {
             text-align: center;
             padding: 20px;
             font-size: 15px;
-            color: #64748b;
+            color: #6b7280;
             margin-top: 30px;
-            background: rgba(255, 255, 255, 0.98);
+            background: rgba(255, 255, 255, 0.95);
             border-radius: 20px 20px 0 0;
-            box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 -6px 25px rgba(0, 0, 0, 0.05);
             transition: background 0.5s ease;
         }
 
         body.dark footer {
-            color: #94a3b8;
-            background: rgba(30, 41, 59, 0.98);
+            color: #9ca3af;
+            background: rgba(17, 24, 39, 0.95);
         }
 
-        @media (max-width: 767px) {
+        /* Media Queries للتوافق مع جميع الأجهزة */
+        @media (max-width: 480px) {
             header {
-                padding: 15px 10px;
+                padding: 10px;
+                border-radius: 0 0 15px 15px;
             }
 
             .logo-circle {
-                width: 35px;
-                height: 35px;
-                font-size: 20px;
+                width: 30px;
+                height: 30px;
+                font-size: 18px;
             }
 
             .site-title {
-                font-size: 20px;
+                font-size: 18px;
             }
 
             .header-actions button {
-                padding: 8px 15px;
-                font-size: 13px;
+                padding: 8px 12px;
+                font-size: 12px;
                 border-radius: 20px;
             }
 
             .container {
-                margin: 15px auto;
+                margin: 10px auto;
                 gap: 10px;
                 padding: 0 5px;
             }
@@ -437,15 +439,15 @@
             }
 
             #note-input {
-                min-height: 150px;
+                min-height: 120px;
                 padding: 12px;
-                font-size: 15px;
+                font-size: 14px;
                 border-radius: 12px;
             }
 
             .toolbar button {
                 padding: 8px 15px;
-                font-size: 13px;
+                font-size: 12px;
                 border-radius: 20px;
             }
 
@@ -482,9 +484,109 @@
             }
         }
 
+        @media (min-width: 481px) and (max-width: 767px) {
+            header {
+                padding: 15px 15px;
+                border-radius: 0 0 20px 20px;
+            }
+
+            .logo-circle {
+                width: 35px;
+                height: 35px;
+                font-size: 20px;
+            }
+
+            .site-title {
+                font-size: 20px;
+            }
+
+            .header-actions button {
+                padding: 8px 15px;
+                font-size: 13px;
+                border-radius: 20px;
+            }
+
+            .container {
+                margin: 15px auto;
+                gap: 15px;
+                padding: 0 10px;
+            }
+
+            .sidebar, .editor {
+                padding: 20px;
+                border-radius: 20px;
+                max-height: 45vh;
+            }
+
+            .search-bar {
+                padding: 12px 20px;
+                font-size: 15px;
+                border-radius: 25px;
+            }
+
+            #note-input {
+                min-height: 150px;
+                padding: 15px;
+                font-size: 15px;
+                border-radius: 15px;
+            }
+
+            .toolbar button {
+                padding: 10px 20px;
+                font-size: 13px;
+                border-radius: 25px;
+            }
+
+            .tags input {
+                padding: 12px 20px;
+                font-size: 15px;
+                border-radius: 15px;
+            }
+
+            .button-group button {
+                padding: 12px 25px;
+                font-size: 15px;
+                border-radius: 30px;
+            }
+
+            #notes-list li {
+                padding: 15px;
+                font-size: 15px;
+                border-radius: 15px;
+                gap: 15px;
+            }
+
+            .note-actions button {
+                padding: 8px 15px;
+                font-size: 13px;
+                border-radius: 20px;
+            }
+
+            footer {
+                padding: 20px;
+                font-size: 15px;
+                margin-top: 25px;
+                border-radius: 20px 20px 0 0;
+            }
+        }
+
         @media (min-width: 768px) {
             .sidebar { flex: 1 1 340px; max-height: 75vh; }
             .editor { flex: 2 1 500px; }
+            header { padding: 20px 30px; }
+            .logo-circle { width: 50px; height: 50px; font-size: 28px; }
+            .site-title { font-size: 32px; }
+            .header-actions button { padding: 12px 25px; font-size: 15px; }
+            .container { margin: 40px auto; gap: 25px; padding: 0 20px; }
+            .sidebar, .editor { padding: 25px; border-radius: 25px; }
+            .search-bar { padding: 14px 25px; font-size: 16px; border-radius: 30px; }
+            #note-input { min-height: 220px; padding: 18px; font-size: 17px; border-radius: 20px; }
+            .toolbar button { padding: 12px 25px; font-size: 15px; border-radius: 30px; }
+            .tags input { padding: 14px 25px; font-size: 16px; border-radius: 20px; }
+            .button-group button { padding: 14px 30px; font-size: 16px; border-radius: 35px; }
+            #notes-list li { padding: 18px; font-size: 16px; border-radius: 20px; gap: 20px; }
+            .note-actions button { padding: 10px 18px; font-size: 14px; border-radius: 25px; }
+            footer { padding: 25px; font-size: 16px; margin-top: 40px; border-radius: 25px 25px 0 0; }
         }
     </style>
 </head>
@@ -515,7 +617,7 @@
             <div class="toolbar">
                 <button onclick="changeColor('#ef4444')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أحمر" data-en="Red">أحمر</span></button>
                 <button onclick="changeColor('#3b82f6')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أزرق" data-en="Blue">أزرق</span></button>
-                <button onclick="changeColor('#1e293b')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أسود" data-en="Black">أسود</span></button>
+                <button onclick="changeColor('#1f2937')"><i class="fas fa-paint-brush"></i> <span class="lang-text" data-ar="أسود" data-en="Black">أسود</span></button>
                 <button onclick="suggestTags()" title="Smart Tags"><i class="fas fa-brain"></i> <span class="lang-text" data-ar="وسوم ذكية" data-en="Smart Tags">وسوم ذكية</span></button>
             </div>
             <textarea id="note-input" placeholder="اكتب ملاحظتك هنا..." data-en-placeholder="Write your note here..."></textarea>
@@ -609,7 +711,7 @@
         function saveNote() {
             const content = document.getElementById("note-input").value.trim();
             const tags = document.getElementById("tags-input").value.split(",").map(tag => tag.trim()).filter(tag => tag);
-            const color = document.getElementById("note-input").style.color || "#1e293b";
+            const color = document.getElementById("note-input").style.color || "#1f2937";
 
             if (!content) {
                 showNotification(currentLang === "ar" ? "يرجى كتابة ملاحظة" : "Please write a note", "error");
@@ -661,7 +763,7 @@
         function clearNote() {
             document.getElementById("note-input").value = "";
             document.getElementById("tags-input").value = "";
-            document.getElementById("note-input").style.color = "#1e293b";
+            document.getElementById("note-input").style.color = "#1f2937";
             editingIndex = null;
             updateLanguage();
             checkSaveButtonState();
