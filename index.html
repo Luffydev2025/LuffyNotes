@@ -145,7 +145,7 @@
         }
 
         .toggle-mode, .toggle-lang, .toolbar button, button, .note-actions button {
-            pointer-events: auto !important; /* تأكد من أن الأزرار قابلة للتفاعل */
+            pointer-events: auto !important;
             cursor: pointer !important;
         }
 
@@ -747,6 +747,13 @@
             let isDarkMode = localStorage.getItem("luffyDarkMode") === "true";
             let editingIndex = null;
 
+            // التحقق من وجود localStorage
+            if (!window.localStorage) {
+                console.error("localStorage is not supported in this browser!");
+                showNotification(currentLang === "ar" ? "المتصفح لا يدعم التخزين المحلي" : "Browser does not support localStorage", "error");
+                return;
+            }
+
             document.addEventListener("DOMContentLoaded", () => {
                 if (isDarkMode) document.body.classList.add("dark");
                 document.body.setAttribute("lang", currentLang);
@@ -755,24 +762,36 @@
                 updateLanguage();
                 updateUIForTheme();
                 checkSaveButtonState();
-                console.log("DOM loaded, notes:", notes); // لتتبع الأخطاء
+                console.log("DOM loaded, notes:", notes);
             });
 
             function toggleDarkMode() {
-                document.body.classList.toggle("dark");
-                isDarkMode = document.body.classList.contains("dark");
-                localStorage.setItem("luffyDarkMode", isDarkMode);
-                updateUIForTheme();
-                console.log("Toggled dark mode to:", isDarkMode);
+                try {
+                    document.body.classList.toggle("dark");
+                    isDarkMode = document.body.classList.contains("dark");
+                    localStorage.setItem("luffyDarkMode", isDarkMode);
+                    updateUIForTheme();
+                    console.log("Toggled dark mode to:", isDarkMode);
+                    showNotification(currentLang === "ar" ? "تم تغيير الوضع!" : "Theme changed!", "success");
+                } catch (error) {
+                    console.error("Error toggling dark mode:", error);
+                    showNotification(currentLang === "ar" ? "خطأ في تغيير الوضع" : "Error changing theme", "error");
+                }
             }
 
             function toggleLanguage() {
-                currentLang = currentLang === "ar" ? "en" : "ar";
-                localStorage.setItem("luffyLang", currentLang);
-                document.body.setAttribute("lang", currentLang);
-                document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
-                updateLanguage();
-                console.log("Toggled language to:", currentLang);
+                try {
+                    currentLang = currentLang === "ar" ? "en" : "ar";
+                    localStorage.setItem("luffyLang", currentLang);
+                    document.body.setAttribute("lang", currentLang);
+                    document.documentElement.setAttribute("dir", currentLang === "ar" ? "rtl" : "ltr");
+                    updateLanguage();
+                    console.log("Toggled language to:", currentLang);
+                    showNotification(currentLang === "ar" ? "تم تغيير اللغة!" : "Language changed!", "success");
+                } catch (error) {
+                    console.error("Error toggling language:", error);
+                    showNotification(currentLang === "ar" ? "خطأ في تغيير اللغة" : "Error changing language", "error");
+                }
             }
 
             function updateLanguage() {
@@ -861,14 +880,20 @@
                         notes.push(note);
                     }
 
+                    // التحقق من تخزين localStorage
                     localStorage.setItem("luffyNotes", JSON.stringify(notes));
+                    console.log("Notes saved to localStorage:", notes);
+
+                    // استرجاع للتأكد من الحفظ
+                    const savedNotes = JSON.parse(localStorage.getItem("luffyNotes")) || [];
+                    console.log("Retrieved notes from localStorage:", savedNotes);
+
                     clearNote();
                     displayNotes();
                     showNotification(currentLang === "ar" ? (editingIndex !== null ? "تم التحديث!" : "تم الحفظ بنجاح!") : (editingIndex !== null ? "Updated!" : "Saved successfully!"), "success");
-                    console.log("Note saved/updated:", note);
                 } catch (error) {
                     console.error("Error saving note:", error);
-                    showNotification(currentLang === "ar" ? "خطأ في الحفظ" : "Error saving note", "error");
+                    showNotification(currentLang === "ar" ? "خطأ في الحفظ: " + error.message : "Error saving note: " + error.message, "error");
                 }
             }
 
@@ -977,6 +1002,12 @@
             let currentLang = localStorage.getItem("luffyLang") || "ar";
             let isDarkMode = localStorage.getItem("luffyDarkMode") === "true";
             let editingIndex = null;
+
+            if (!window.localStorage) {
+                console.error("localStorage is not supported in this browser!");
+                showNotification(currentLang === "ar" ? "المتصفح لا يدعم التخزين المحلي" : "Browser does not support localStorage", "error");
+                return;
+            }
 
             document.addEventListener("DOMContentLoaded", () => {
                 if (isDarkMode) document.body.classList.add("dark");
